@@ -11,9 +11,9 @@ const taskSchema = new mongoose.Schema(
 
 const columnSchema = new mongoose.Schema(
     {
-        title: String,
+        title: { type: String, required: true },
+        position: { type: Number, required: true },
         tasks: [taskSchema],
-        position: Number,
     },
     {
         timestamps: true,

@@ -35,6 +35,10 @@ class BusyList extends React.Component {
         this.setState({ columns });
     }
 
+    handleUpdateColumn = (updateData) => {
+        columnApi.update(updateData);
+    };
+
     onDragEnd = (result) => {
         const { destination, source, type } = result;
         if (!destination) return;
@@ -46,22 +50,33 @@ class BusyList extends React.Component {
 
         // DROP ENDED FOR COLUMN
         if (type === 'column') {
-            const newState = this.state.columns.map((column) => {
+            let newState = this.state.columns.map((column) => {
                 return JSON.parse(JSON.stringify(column));
             });
             const updateColumn = newState.splice(source.index, 1)[0];
             newState.splice(destination.index, 0, updateColumn);
+            newState = newState.map((column, index) => {
+                column.position = index;
+                this.handleUpdateColumn(column);
+                return column;
+            });
             this.setState({ columns: newState });
             return;
         }
         // DROP ENDED FOR TASKS
-        const newState = this.state.columns.map((column) => {
+        let newState = this.state.columns.map((column) => {
             return JSON.parse(JSON.stringify(column));
         });
         const updateStartColumn = newState[source.droppableId];
         const updateFinishColumn = newState[destination.droppableId];
         const updateTask = updateStartColumn.tasks.splice(source.index, 1)[0];
         updateFinishColumn.tasks.splice(destination.index, 0, updateTask);
+        if (updateStartColumn === updateFinishColumn)
+            this.handleUpdateColumn(updateFinishColumn);
+        else {
+            this.handleUpdateColumn(updateStartColumn);
+            this.handleUpdateColumn(updateFinishColumn);
+        }
         this.setState({ columns: newState });
     };
 
