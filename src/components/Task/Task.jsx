@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
-    box-shadow: 0 0 5px 5px lightgray;
+    box-shadow: 0 0 5px 1px lightgray;
     border-radius: 2px;
     padding: 8px;
     margin-bottom: 8px;

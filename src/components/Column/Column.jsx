@@ -7,6 +7,7 @@ import Task from '../Task/Task';
 const ContainerColumn = styled.div``;
 
 const Container = styled.div`
+    box-shadow: 0px 0px 5px 1px lightgray;
     margin: 8px;
     border: 1px solid lightgrey;
     background-color: white;
