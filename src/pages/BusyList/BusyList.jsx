@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
-import columnApi from '../../services/columnApi';
+import columnApi from '../../services/boardApi';
 import Column from '../../components/Column/Column';
 
 const Container = styled.div`
