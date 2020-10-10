@@ -21,16 +21,21 @@ const NavLink = styled.div`
 `;
 
 const NavBar = (props) => {
-    return (
-        <Container>
+    let loggedIn = !props.user ? (
+        <>
+            <p>Welcome user.</p>
+        </>
+    ) : (
+        <>
             <Link to={'/accounts/login'}>
                 <NavLink>Login</NavLink>
             </Link>
             <Link to={'/accounts/signup'}>
                 <NavLink>Sign Up</NavLink>
             </Link>
-        </Container>
+        </>
     );
+    return <Container>{loggedIn}</Container>;
 };
 
 export default NavBar;

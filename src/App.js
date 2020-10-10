@@ -16,7 +16,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <NavBar />
+                <NavBar user={this.state.user} />
                 <Switch>
                     {/* Home Page route */}
                     <Route exact path="/" render={() => <></>} />
