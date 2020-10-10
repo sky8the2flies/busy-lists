@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import FormModal from '../../Modals/FormModal';
+import userService from '../../services/userService';
 
 class SignupPage extends React.Component {
     state = {
@@ -18,6 +19,14 @@ class SignupPage extends React.Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+            await userService.signup(this.state);
+            this.props.handleLoadUser();
+            this.props.history.push('/');
+        } catch (err) {
+            console.log({ err });
+            //TODO Show user err
+        }
     };
 
     isFormInvalid() {

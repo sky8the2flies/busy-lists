@@ -18,6 +18,10 @@ class App extends React.Component {
         this.setState({ user: null });
     };
 
+    handleLoadUser = () => {
+        this.setState({ user: userService.getUser() });
+    };
+
     render() {
         return (
             <div>
@@ -32,13 +36,23 @@ class App extends React.Component {
                     <Route
                         exact
                         path="/accounts/signup"
-                        render={() => <SignupPage />}
+                        render={({ history }) => (
+                            <SignupPage
+                                history={history}
+                                handleLoadUser={this.handleLoadUser}
+                            />
+                        )}
                     />
                     {/* Log In Route */}
                     <Route
                         exact
                         path="/accounts/login"
-                        render={() => <LoginPage />}
+                        render={({ history }) => (
+                            <LoginPage
+                                history={history}
+                                handleLoadUser={this.handleLoadUser}
+                            />
+                        )}
                     />
                     {/* Profile Route */}
                     <Route
@@ -47,7 +61,7 @@ class App extends React.Component {
                         render={() => <></>}
                     />
                     {/* View Board Route */}
-                    <Route path="/boards/:bid" render={() => <BusyList />} />
+                    <Route path="/boards/:id" render={() => <BusyList />} />
                 </Switch>
             </div>
         );
