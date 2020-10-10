@@ -1,12 +1,18 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import userService from './services/userService';
+
 import NavBar from './components/NavBar/NavBar';
 import BusyList from './pages/BusyList/BusyList';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
 
 class App extends React.Component {
+    state = {
+        user: userService.getUser(),
+    };
+
     render() {
         return (
             <div>
