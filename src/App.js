@@ -13,10 +13,18 @@ class App extends React.Component {
         user: userService.getUser(),
     };
 
+    handleLogout = () => {
+        userService.logout();
+        this.setState({ user: null });
+    };
+
     render() {
         return (
             <div>
-                <NavBar user={this.state.user} />
+                <NavBar
+                    user={this.state.user}
+                    handleLogout={this.handleLogout}
+                />
                 <Switch>
                     {/* Home Page route */}
                     <Route exact path="/" render={() => <></>} />

@@ -18,12 +18,16 @@ const NavLink = styled.div`
     height: 100%;
     text-align: center;
     margin: 0px 10px;
+    color: black;
 `;
 
 const NavBar = (props) => {
-    let loggedIn = !props.user ? (
+    let loggedIn = props.user ? (
         <>
             <p>Welcome user.</p>
+            <Link to="">
+                <NavLink onClick={props.handleLogout}>Log out</NavLink>
+            </Link>
         </>
     ) : (
         <>

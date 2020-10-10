@@ -3,6 +3,8 @@ import tokenService from './tokenService';
 export default {
     getUser,
     signup,
+    login,
+    logout,
 };
 
 const BASE_URL = '/api/users';
@@ -24,4 +26,10 @@ function signup(user) {
         .then(({ token }) => {
             tokenService.setToken(token);
         });
+}
+
+function login(user) {}
+
+function logout() {
+    tokenService.removeToken();
 }

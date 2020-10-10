@@ -1,11 +1,16 @@
 export default {
     setToken,
+    removeToken,
     getUserFromToken,
     getToken,
 };
 
 function setToken(token) {
     localStorage.setItem('token', token);
+}
+
+function removeToken() {
+    localStorage.removeItem('token');
 }
 
 function getUserFromToken() {
