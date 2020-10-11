@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import userService from '../../services/userService';
+
 import FormModal from '../../Modals/FormModal';
 
 class LoginPage extends React.Component {
     state = {
         email: '',
-        pw: '',
+        password: '',
     };
 
     handleChange = (e) => {
@@ -17,6 +19,14 @@ class LoginPage extends React.Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+            await userService.login(this.state);
+            this.props.handleLoadUser();
+            this.props.history.push('/');
+        } catch (err) {
+            console.log({ err });
+            // Send user why error happened
+        }
     };
 
     render() {
@@ -37,8 +47,8 @@ class LoginPage extends React.Component {
                             <input
                                 type="password"
                                 placeholder="Password"
-                                value={this.state.pw}
-                                name="pw"
+                                value={this.state.password}
+                                name="password"
                                 onChange={this.handleChange}
                             />
                         </div>
