@@ -24,7 +24,7 @@ userSchema.pre('save', function (next) {
 });
 
 userSchema.set('toJSON', {
-    transform: function (doc, next) {
+    transform: function (doc, ret) {
         delete ret.password;
         return ret;
     },
