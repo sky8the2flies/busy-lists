@@ -25,7 +25,7 @@ const NavBar = (props) => {
     let loggedIn = props.user ? (
         <>
             <p>Welcome user.</p>
-            <Link to="">
+            <Link to="/">
                 <NavLink onClick={props.handleLogout}>Log out</NavLink>
             </Link>
         </>
