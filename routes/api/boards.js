@@ -11,6 +11,8 @@ router.post('/', boardCtrl.createBoard);
 router.get('/:id', boardCtrl.getOne);
 //PUT /api/boards/:id
 router.put('/:id', boardCtrl.updateBoard);
+//DELETE /api/boards/:id
+router.delete('/:id', boardCtrl.deleteBoard);
 
 function checkAuth(req, res, next) {
     if (req.user) return next();

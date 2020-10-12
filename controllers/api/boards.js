@@ -4,6 +4,7 @@ module.exports = {
     getAll,
     getOne,
     createBoard,
+    deleteBoard,
     updateBoard,
 };
 
@@ -39,6 +40,16 @@ async function createBoard(req, res) {
     } catch (err) {
         console.log(err);
         return res.status(400).json(err);
+    }
+}
+
+async function deleteBoard(req, res) {
+    try {
+        const board = await Board.findByIdAndDelete(req.params.id);
+        return res.status(200).json(board);
+    } catch (err) {
+        console.log(err);
+        return res.status(404).json(err);
     }
 }
 

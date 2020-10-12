@@ -9,3 +9,11 @@
     text-overflow: ellipsis;
     font-size: 15px;
 }
+
+.HomePage-options {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    width: 100%;
+}

@@ -4,6 +4,7 @@ export default {
     getAll,
     getOne,
     createBoard,
+    deleteBoard,
     updateBoard,
     createColumn,
     createTask,
@@ -48,6 +49,21 @@ function createBoard(board) {
             throw new Error('I am unsure (board)..');
         })
         .then((board) => board);
+}
+
+function deleteBoard(boardId) {
+    return fetch(`${BASE_URL}/${boardId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-type': 'application/json',
+            Authorization: 'Bearer ' + tokenService.getToken(),
+        },
+    })
+        .then((res) => {
+            if (res.ok) return res.json();
+            throw new Error('I am unsure (board delete)');
+        })
+        .then((deletedBoard) => deletedBoard);
 }
 
 function updateBoard(board) {

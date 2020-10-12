@@ -7,6 +7,7 @@ import './HomePage.css';
 
 import BoardForm from '../../components/BoardForm/BoardForm';
 import Loader from '../../components/Loader/Loader';
+import Options from '../../modals/Options';
 
 const PageContainer = styled.div`
     display: flex;
@@ -41,6 +42,14 @@ const NewFormContainer = styled.div`
     width: 100%;
 `;
 
+const OptionsContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    width: 100%;
+`;
+
 class HomePage extends React.Component {
     state = {
         boards: [],
@@ -53,12 +62,22 @@ class HomePage extends React.Component {
         this.setState({ boards, loading: false });
     }
 
-    handleBoardCreate = async (board) => {
+    handleBoardCreate = (board) => {
         const newState = this.state.boards.map((board) =>
             JSON.parse(JSON.stringify(board))
         );
         newState.push(board);
         this.setState({ boards: newState });
+    };
+
+    handleBoardDelete = async (boardId, index) => {
+        this.setState({ loading: true });
+        await boardApi.deleteBoard(boardId);
+        const newState = this.state.boards.map((board) =>
+            JSON.parse(JSON.stringify(board))
+        );
+        newState.splice(index, 1);
+        this.setState({ boards: newState, loading: false });
     };
 
     handleNewBoardForm = () => {
@@ -70,7 +89,7 @@ class HomePage extends React.Component {
             <Loader />
         ) : (
             <>
-                {this.state.boards.map((board) => (
+                {this.state.boards.map((board, index) => (
                     <BoardContainer key={board._id}>
                         <Link
                             className={'HomePage-board'}
@@ -78,10 +97,21 @@ class HomePage extends React.Component {
                         >
                             {board.name}
                         </Link>
-                        <i
-                            onClick={() => console.log('test')}
-                            className="fas fa-ellipsis-h"
-                        ></i>
+                        <Options name={board.name}>
+                            <Link
+                                className={'HomePage-options'}
+                                to={`/boards/${board._id}`}
+                            >
+                                View
+                            </Link>
+                            <OptionsContainer
+                                onClick={() =>
+                                    this.handleBoardDelete(board._id, index)
+                                }
+                            >
+                                Delete
+                            </OptionsContainer>
+                        </Options>
                     </BoardContainer>
                 ))}
             </>
