@@ -18,8 +18,12 @@ app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'build')));
 
 // Put API (AJAX) routes here, before the "catch all" route
-app.use('/api/boards', require('./routes/api/boards'));
 app.use('/api/users', require('./routes/api/users'));
+
+app.use(require('./config/auth'));
+app.use('/api/boards', require('./routes/api/boards'));
+app.use('/api/boards', require('./routes/api/columns'));
+app.use('/api/boards', require('./routes/api/tasks'));
 
 // Catch all route
 app.get('/*', function (req, res) {
