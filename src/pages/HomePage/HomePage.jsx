@@ -8,9 +8,11 @@ import './HomePage.css';
 import BoardForm from '../../components/BoardForm/BoardForm';
 import Loader from '../../components/Loader/Loader';
 import Options from '../../modals/Options';
+import RenameBoardForm from '../../components/RenameBoardForm/RenameBoardForm';
 
 const PageContainer = styled.div`
     display: flex;
+    flex-grow: 1;
 `;
 
 const Container = styled.div`
@@ -31,7 +33,7 @@ const BoardContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 40px;
+    min-height: 40px;
 `;
 
 const NewFormContainer = styled.div`
@@ -55,6 +57,7 @@ class HomePage extends React.Component {
         boards: [],
         loading: true,
         newForm: false,
+        editBoard: -1,
     };
 
     async componentDidMount() {
@@ -84,6 +87,18 @@ class HomePage extends React.Component {
         this.setState({ newForm: !this.state.newForm });
     };
 
+    handleSubmitRename = (name) => {
+        const newState = this.state.boards.map((board) =>
+            JSON.parse(JSON.stringify(board))
+        );
+        newState[this.state.editBoard].name = name;
+        this.setState({ boards: newState, editBoard: -1 });
+    };
+
+    handleCancelRename = () => {
+        this.setState({ editBoard: -1 });
+    };
+
     render() {
         const content = this.state.loading ? (
             <Loader />
@@ -91,27 +106,49 @@ class HomePage extends React.Component {
             <>
                 {this.state.boards.map((board, index) => (
                     <BoardContainer key={board._id}>
-                        <Link
-                            className={'HomePage-board'}
-                            to={`/boards/${board._id}`}
-                        >
-                            {board.name}
-                        </Link>
-                        <Options name={board.name}>
-                            <Link
-                                className={'HomePage-options'}
-                                to={`/boards/${board._id}`}
-                            >
-                                View
-                            </Link>
-                            <OptionsContainer
-                                onClick={() =>
-                                    this.handleBoardDelete(board._id, index)
-                                }
-                            >
-                                Delete
-                            </OptionsContainer>
-                        </Options>
+                        {this.state.editBoard !== index ? (
+                            <>
+                                <Link
+                                    className={'HomePage-board'}
+                                    to={`/boards/${board._id}`}
+                                >
+                                    {board.name}
+                                </Link>
+                                <Options name={board.name}>
+                                    <Link
+                                        className={'HomePage-options'}
+                                        to={`/boards/${board._id}`}
+                                    >
+                                        View
+                                    </Link>
+                                    <OptionsContainer
+                                        onClick={() =>
+                                            this.setState({ editBoard: index })
+                                        }
+                                    >
+                                        Rename
+                                    </OptionsContainer>
+                                    <OptionsContainer
+                                        onClick={() =>
+                                            this.handleBoardDelete(
+                                                board._id,
+                                                index
+                                            )
+                                        }
+                                    >
+                                        Delete
+                                    </OptionsContainer>
+                                </Options>
+                            </>
+                        ) : (
+                            <>
+                                <RenameBoardForm
+                                    board={board}
+                                    handleSubmitRename={this.handleSubmitRename}
+                                    handleCancelRename={this.handleCancelRename}
+                                />
+                            </>
+                        )}
                     </BoardContainer>
                 ))}
             </>
