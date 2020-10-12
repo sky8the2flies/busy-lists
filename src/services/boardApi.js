@@ -3,8 +3,9 @@ import tokenService from './tokenService';
 export default {
     getAll,
     getOne,
+    updateBoard,
     createColumn,
-    updateColumns,
+    createTask,
 };
 
 /* IMPORTANT: ANY REQUEST MADE TO CHANGE DATA IN DB, ADD THIS TO HEADERS */
@@ -25,6 +26,14 @@ function getOne(id) {
     return fetch(`${BASE_URL}/${id}`).then((res) => res.json());
 }
 
+function updateBoard(board) {
+    fetch(`${BASE_URL}/${board._id}`, {
+        method: 'PUT',
+        headers: new Headers({ 'Content-Type': 'application/json' }),
+        body: JSON.stringify(board),
+    });
+}
+
 function createColumn(boardId, column) {
     return fetch(`${BASE_URL}/${boardId}/columns`, {
         method: 'POST',
@@ -33,15 +42,20 @@ function createColumn(boardId, column) {
     })
         .then((res) => {
             if (res.ok) return res.json();
-            throw new Error('I am unsure..');
+            throw new Error('I am unsure (column)..');
         })
         .then((board) => board);
 }
 
-function updateColumns(board) {
-    fetch(`${BASE_URL}/${board._id}`, {
-        method: 'PUT',
+function createTask(boardId, columnId, task) {
+    return fetch(`${BASE_URL}/${boardId}/columns/${columnId}`, {
+        method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify(board),
-    });
+        body: JSON.stringify(task),
+    })
+        .then((res) => {
+            if (res.ok) return res.json();
+            throw new Error('I am unsure (task)...');
+        })
+        .then((board) => board);
 }

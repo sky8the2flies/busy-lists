@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import styled from 'styled-components';
 
 import userService from './services/userService';
 
@@ -9,10 +8,6 @@ import BusyList from './pages/BusyList/BusyList';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
 import HomePage from './pages/HomePage/HomePage';
-
-const Body = styled.body`
-    min-height: 100vh;
-`;
 
 class App extends React.Component {
     state = {

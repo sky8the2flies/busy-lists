@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 import Task from '../Task/Task';
+import TaskForm from '../TaskForm/TaskForm';
 
 const ContainerColumn = styled.div``;
 
@@ -30,10 +31,10 @@ const TaskList = styled.div`
     flex-grow: 1;
     min-height: 25px;
 `;
-const NewTask = styled.div`
-    padding: 5px;
-    text-align: center;
-`;
+// const NewTask = styled.div`
+//     padding: 5px;
+//     text-align: center;
+// `;
 
 class InnerList extends React.PureComponent {
     render() {
@@ -80,7 +81,13 @@ export default class Column extends React.Component {
                                             tasks={this.props.column.tasks}
                                         />
                                         {provided.placeholder}
-                                        <NewTask>+ Add new task</NewTask>
+                                        <TaskForm
+                                            boardId={this.props.boardId}
+                                            columnId={this.props.column._id}
+                                            handleTaskCreate={
+                                                this.props.handleTaskCreate
+                                            }
+                                        />
                                     </TaskList>
                                 )}
                             </Droppable>

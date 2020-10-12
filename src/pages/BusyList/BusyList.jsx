@@ -26,7 +26,13 @@ class InnerList extends React.PureComponent {
         return (
             <>
                 {this.props.columns.map((column, index) => (
-                    <Column key={index} column={column} index={index} />
+                    <Column
+                        key={index}
+                        column={column}
+                        index={index}
+                        boardId={this.props.boardId}
+                        handleTaskCreate={this.props.handleTaskCreate}
+                    />
                 ))}
             </>
         );
@@ -42,11 +48,15 @@ class BusyList extends React.Component {
         this.setState({ board });
     }
 
-    handleUpdateColumns = (updateData) => {
-        boardApi.updateColumns(updateData);
+    handleUpdateBoard = (updateData) => {
+        boardApi.updateBoard(updateData);
     };
 
     handleColumnCreate = async (board) => {
+        this.setState({ board });
+    };
+
+    handleTaskCreate = async (board) => {
         this.setState({ board });
     };
 
@@ -69,7 +79,7 @@ class BusyList extends React.Component {
             };
             const updateColumn = newState.columns.splice(source.index, 1)[0];
             newState.columns.splice(destination.index, 0, updateColumn);
-            this.handleUpdateColumns(newState);
+            this.handleUpdateBoard(newState);
             this.setState({ board: newState });
             return;
         }
@@ -84,7 +94,7 @@ class BusyList extends React.Component {
         const updateFinishColumn = newState.columns[destination.droppableId];
         const updateTask = updateStartColumn.tasks.splice(source.index, 1)[0];
         updateFinishColumn.tasks.splice(destination.index, 0, updateTask);
-        this.handleUpdateColumns(newState);
+        this.handleUpdateBoard(newState);
         this.setState({ board: newState });
     };
 
@@ -105,6 +115,8 @@ class BusyList extends React.Component {
                                 >
                                     <InnerList
                                         columns={this.state.board.columns}
+                                        handleTaskCreate={this.handleTaskCreate}
+                                        boardId={this.state.board._id}
                                     />
                                     {provided.placeholder}
                                 </Container>
