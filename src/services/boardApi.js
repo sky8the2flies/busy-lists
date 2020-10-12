@@ -20,7 +20,14 @@ export default {
 const BASE_URL = '/api/boards';
 
 function getAll() {
-    return fetch(BASE_URL).then((res) => res.json());
+    const token = tokenService.getToken();
+    return fetch(BASE_URL, {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json',
+            Authorization: token ? 'Bearer ' + token : null,
+        },
+    }).then((res) => res.json());
 }
 
 function getOne(id) {

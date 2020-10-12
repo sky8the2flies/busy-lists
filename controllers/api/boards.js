@@ -9,7 +9,8 @@ module.exports = {
 
 async function getAll(req, res) {
     try {
-        const boards = await Board.find({});
+        if (!req.user) return res.status(404).json([]);
+        const boards = await Board.find({ authors: req.user._id });
         return res.status(200).json(boards);
     } catch (err) {
         console.log(err);

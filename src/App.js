@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
 import userService from './services/userService';
@@ -71,7 +71,16 @@ class App extends React.Component {
                         render={() => <></>}
                     />
                     {/* View Board Route */}
-                    <Route path="/boards/:id" render={() => <BusyList />} />
+                    <Route
+                        path="/boards/:id"
+                        render={() =>
+                            userService.getUser() ? (
+                                <BusyList />
+                            ) : (
+                                <Redirect to="/accounts/login" />
+                            )
+                        }
+                    />
                 </Switch>
             </Container>
         );
