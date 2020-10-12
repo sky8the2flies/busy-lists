@@ -37,7 +37,11 @@ class App extends React.Component {
                 />
                 <Switch>
                     {/* Home Page route */}
-                    <Route exact path="/" render={() => <HomePage />} />
+                    <Route
+                        exact
+                        path="/"
+                        render={({ history }) => <HomePage history={history} />}
+                    />
                     {/* Sign Up Route */}
                     <Route
                         exact

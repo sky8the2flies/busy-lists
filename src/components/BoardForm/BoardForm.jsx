@@ -8,8 +8,8 @@ const FormContainer = styled.div`
     height: 50px;
 `;
 
-const TaskForm = (props) => {
-    const [form, setForm] = useState({ content: '' });
+const BoardForm = (props) => {
+    const [form, setForm] = useState({ name: '' });
 
     const handleChange = (e) => {
         setForm({ [e.target.name]: e.target.value });
@@ -18,13 +18,10 @@ const TaskForm = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const board = await boardApi.createTask(
-                props.boardId,
-                props.columnId,
-                form
-            );
-            setForm({ content: '' });
-            props.handleTaskCreate(board);
+            const board = await boardApi.createBoard(form);
+            setForm({ name: '' });
+            props.handleBoardCreate(board);
+            props.history.push(`/boards/${board._id}`);
         } catch (err) {
             console.log(err);
             //display err for user
@@ -35,15 +32,15 @@ const TaskForm = (props) => {
         <FormContainer>
             <form onSubmit={handleSubmit}>
                 <input
-                    name="content"
-                    placeholder="Enter task name"
-                    value={form.content}
+                    name="name"
+                    placeholder="Enter board name"
+                    value={form.name}
                     onChange={handleChange}
                 />
-                <button>Add Task</button>
+                <button>Add Board</button>
             </form>
         </FormContainer>
     );
 };
 
-export default TaskForm;
+export default BoardForm;

@@ -52,11 +52,7 @@ class BusyList extends React.Component {
         boardApi.updateBoard(updateData);
     };
 
-    handleColumnCreate = async (board) => {
-        this.setState({ board });
-    };
-
-    handleTaskCreate = async (board) => {
+    handleComponentCreation = async (board) => {
         this.setState({ board });
     };
 
@@ -115,14 +111,18 @@ class BusyList extends React.Component {
                                 >
                                     <InnerList
                                         columns={this.state.board.columns}
-                                        handleTaskCreate={this.handleTaskCreate}
+                                        handleTaskCreate={
+                                            this.handleComponentCreation
+                                        }
                                         boardId={this.state.board._id}
                                     />
                                     {provided.placeholder}
                                 </Container>
                                 <CardForm
                                     boardId={this.state.board._id}
-                                    handleColumnCreate={this.handleColumnCreate}
+                                    handleColumnCreate={
+                                        this.handleComponentCreation
+                                    }
                                 />
                             </ContainerRow>
                         )}

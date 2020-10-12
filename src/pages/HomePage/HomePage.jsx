@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import boardApi from '../../services/boardApi';
 
+import BoardForm from '../../components/BoardForm/BoardForm';
+
 class HomePage extends React.Component {
     state = {
         boards: [],
@@ -13,6 +15,14 @@ class HomePage extends React.Component {
         this.setState({ boards });
     }
 
+    handleBoardCreate = async (board) => {
+        const newState = this.state.boards.map((board) =>
+            JSON.parse(JSON.stringify(board))
+        );
+        newState.push(board);
+        this.setState({ boards: newState });
+    };
+
     render() {
         return (
             <>
@@ -22,6 +32,10 @@ class HomePage extends React.Component {
                         {board.name}
                     </Link>
                 ))}
+                <BoardForm
+                    history={this.props.history}
+                    handleBoardCreate={this.handleBoardCreate}
+                />
             </>
         );
     }

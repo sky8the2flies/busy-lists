@@ -29,7 +29,10 @@ async function getOne(req, res) {
 
 async function createBoard(req, res) {
     const board = new Board(req.body);
+    board.columns = [];
+    board.authors = [];
     try {
+        board.authors.push(req.user);
         await board.save();
         return res.status(201).json(board);
     } catch (err) {

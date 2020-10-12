@@ -1,8 +1,9 @@
-//import tokenService from './tokenService';
+import tokenService from './tokenService';
 
 export default {
     getAll,
     getOne,
+    createBoard,
     updateBoard,
     createColumn,
     createTask,
@@ -24,6 +25,22 @@ function getAll() {
 
 function getOne(id) {
     return fetch(`${BASE_URL}/${id}`).then((res) => res.json());
+}
+
+function createBoard(board) {
+    return fetch(`${BASE_URL}`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            Authorization: 'Bearer ' + tokenService.getToken(),
+        },
+        body: JSON.stringify(board),
+    })
+        .then((res) => {
+            if (res.ok) return res.json();
+            throw new Error('I am unsure (board)..');
+        })
+        .then((board) => board);
 }
 
 function updateBoard(board) {
