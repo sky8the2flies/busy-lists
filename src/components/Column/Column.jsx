@@ -4,6 +4,7 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 import Task from '../Task/Task';
 import TaskForm from '../TaskForm/TaskForm';
+import Options from '../../modals/Options';
 
 const ContainerColumn = styled.div``;
 
@@ -17,7 +18,10 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
 `;
-const Title = styled.h3`
+const Title = styled.div`
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
     padding: 8px;
     border-bottom: 1px solid lightgrey;
     transition: background-color 0.2s ease;
@@ -66,6 +70,7 @@ export default class Column extends React.Component {
                                 isDragging={snapshot.isDragging}
                             >
                                 {this.props.column.title}
+                                <Options />
                             </Title>
                             <Droppable
                                 droppableId={String(this.props.index)}

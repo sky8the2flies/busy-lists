@@ -3,6 +3,10 @@ import styled from 'styled-components';
 
 const ParentMenu = styled.div`
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 `;
 
 const OptionsMenu = styled.div`
@@ -15,21 +19,35 @@ const OptionsMenu = styled.div`
     border-radius: 5px;
     left: 20px;
     top: -10px;
-    z-index: 99;
+`;
+
+const ChildMenu = styled.div`
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
 `;
 
 const OptionTitle = styled.div`
     text-align: center;
-    border-bottom: 1px solid lightgray;
 `;
 
 const Options = (props) => {
     const [menu, setMenu] = useState(false);
     const showMenu = menu ? (
-        <OptionsMenu>
-            {props.name ? <OptionTitle>{props.name}</OptionTitle> : <></>}
-            {props.children}
-        </OptionsMenu>
+        <>
+            <OptionsMenu>
+                {props.name ? (
+                    <OptionTitle>
+                        {props.name}
+                        <hr />
+                    </OptionTitle>
+                ) : (
+                    <></>
+                )}
+                <ChildMenu>{props.children}</ChildMenu>
+            </OptionsMenu>
+        </>
     ) : (
         <></>
     );
@@ -38,7 +56,7 @@ const Options = (props) => {
             <ParentMenu>
                 <i
                     onClick={() => setMenu(!menu)}
-                    className="fas fa-ellipsis-h"
+                    className={'clickable fas fa-ellipsis-h'}
                 ></i>
                 {showMenu}
             </ParentMenu>

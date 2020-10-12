@@ -109,19 +109,22 @@ class HomePage extends React.Component {
                         {this.state.editBoard !== index ? (
                             <>
                                 <Link
-                                    className={'HomePage-board'}
+                                    className={'HomePage-board reset-link'}
                                     to={`/boards/${board._id}`}
                                 >
                                     {board.name}
                                 </Link>
                                 <Options name={board.name}>
                                     <Link
-                                        className={'HomePage-options'}
+                                        className={
+                                            'HomePage-options reset-link'
+                                        }
                                         to={`/boards/${board._id}`}
                                     >
                                         View
                                     </Link>
                                     <OptionsContainer
+                                        className={'clickable'}
                                         onClick={() =>
                                             this.setState({ editBoard: index })
                                         }
@@ -129,6 +132,8 @@ class HomePage extends React.Component {
                                         Rename
                                     </OptionsContainer>
                                     <OptionsContainer
+                                        className={'clickable'}
+                                        style={{ color: 'red' }}
                                         onClick={() =>
                                             this.handleBoardDelete(
                                                 board._id,
@@ -160,7 +165,10 @@ class HomePage extends React.Component {
                 handleNewBoardForm={this.handleNewBoardForm}
             />
         ) : (
-            <NewFormContainer onClick={() => this.handleNewBoardForm()}>
+            <NewFormContainer
+                className={'clickable'}
+                onClick={() => this.handleNewBoardForm()}
+            >
                 + New Board
             </NewFormContainer>
         );

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css';
 import '@atlaskit/css-reset';
 import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom';
