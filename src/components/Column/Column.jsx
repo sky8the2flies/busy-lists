@@ -9,12 +9,10 @@ const ContainerColumn = styled.div``;
 const Container = styled.div`
     box-shadow: 0px 0px 5px 1px lightgray;
     margin: 8px;
-    border: 1px solid lightgrey;
     background-color: white;
     border-radius: 2px;
     min-width: 220px;
     width: 220px;
-    overflow-x: hidden;
     display: flex;
     flex-direction: column;
 `;
