@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
-import columnApi from '../../services/boardApi';
+import boardApi from '../../services/boardApi';
+
 import Column from '../../components/Column/Column';
+import CardForm from '../../components/CardForm/CardForm';
 
 const Container = styled.div`
     display: flex;
@@ -11,6 +14,11 @@ const Container = styled.div`
 
 const ContainerRow = styled.div`
     display: flex;
+`;
+
+const BoardRow = styled.div`
+    overflow-x: scroll;
+    height: 100%;
 `;
 
 class InnerList extends React.PureComponent {
@@ -26,17 +34,20 @@ class InnerList extends React.PureComponent {
 }
 
 class BusyList extends React.Component {
-    state = {
-        columns: [],
-    };
+    state = { board: { columns: [] } };
 
     async componentDidMount() {
-        const columns = await columnApi.getAll();
-        this.setState({ columns });
+        const id = this.props.match.params.id;
+        const board = await boardApi.getOne(id);
+        this.setState({ board });
     }
 
-    handleUpdateColumn = (updateData) => {
-        columnApi.update(updateData);
+    handleUpdateColumns = (updateData) => {
+        boardApi.updateColumns(updateData);
+    };
+
+    handleColumnCreate = async (board) => {
+        this.setState({ board });
     };
 
     onDragEnd = (result) => {
@@ -50,62 +61,64 @@ class BusyList extends React.Component {
 
         // DROP ENDED FOR COLUMN
         if (type === 'column') {
-            let newState = this.state.columns.map((column) => {
-                return JSON.parse(JSON.stringify(column));
-            });
-            const updateColumn = newState.splice(source.index, 1)[0];
-            newState.splice(destination.index, 0, updateColumn);
-            newState = newState.map((column, index) => {
-                column.position = index;
-                this.handleUpdateColumn(column);
-                return column;
-            });
-            this.setState({ columns: newState });
+            let newState = {
+                ...this.state.board,
+                columns: this.state.board.columns.map((column) => {
+                    return JSON.parse(JSON.stringify(column));
+                }),
+            };
+            const updateColumn = newState.columns.splice(source.index, 1)[0];
+            newState.columns.splice(destination.index, 0, updateColumn);
+            this.handleUpdateColumns(newState);
+            this.setState({ board: newState });
             return;
         }
         // DROP ENDED FOR TASKS
-        let newState = this.state.columns.map((column) => {
-            return JSON.parse(JSON.stringify(column));
-        });
-        const updateStartColumn = newState[source.droppableId];
-        const updateFinishColumn = newState[destination.droppableId];
+        let newState = {
+            ...this.state.board,
+            columns: this.state.board.columns.map((column) => {
+                return JSON.parse(JSON.stringify(column));
+            }),
+        };
+        const updateStartColumn = newState.columns[source.droppableId];
+        const updateFinishColumn = newState.columns[destination.droppableId];
         const updateTask = updateStartColumn.tasks.splice(source.index, 1)[0];
         updateFinishColumn.tasks.splice(destination.index, 0, updateTask);
-        if (updateStartColumn === updateFinishColumn)
-            this.handleUpdateColumn(updateFinishColumn);
-        else {
-            this.handleUpdateColumn(updateStartColumn);
-            this.handleUpdateColumn(updateFinishColumn);
-        }
-        this.setState({ columns: newState });
+        this.handleUpdateColumns(newState);
+        this.setState({ board: newState });
     };
 
     render() {
         return (
-            <DragDropContext onDragEnd={this.onDragEnd}>
-                <Droppable
-                    droppableId="all-columns"
-                    direction="horizontal"
-                    type="column"
-                >
-                    {(provided) => (
-                        <ContainerRow>
-                            <Container
-                                {...provided.droppableProps}
-                                ref={provided.innerRef}
-                            >
-                                <InnerList columns={this.state.columns} />
-                                {provided.placeholder}
-                            </Container>
-                            <div>
-                                <button>Add new card?</button>
-                            </div>
-                        </ContainerRow>
-                    )}
-                </Droppable>
-            </DragDropContext>
+            <BoardRow>
+                <DragDropContext onDragEnd={this.onDragEnd}>
+                    <Droppable
+                        droppableId="all-columns"
+                        direction="horizontal"
+                        type="column"
+                    >
+                        {(provided) => (
+                            <ContainerRow>
+                                <Container
+                                    {...provided.droppableProps}
+                                    ref={provided.innerRef}
+                                >
+                                    <InnerList
+                                        columns={this.state.board.columns}
+                                    />
+                                    {provided.placeholder}
+                                </Container>
+                                <CardForm
+                                    boardId={this.state.board._id}
+                                    handleColumnCreate={this.handleColumnCreate}
+                                />
+                            </ContainerRow>
+                        )}
+                    </Droppable>
+                </DragDropContext>
+            </BoardRow>
         );
     }
 }
 
-export default BusyList;
+export default withRouter(BusyList);

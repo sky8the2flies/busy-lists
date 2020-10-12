@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import styled from 'styled-components';
 
 import userService from './services/userService';
 
@@ -7,6 +8,11 @@ import NavBar from './components/NavBar/NavBar';
 import BusyList from './pages/BusyList/BusyList';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
+import HomePage from './pages/HomePage/HomePage';
+
+const Body = styled.body`
+    min-height: 100vh;
+`;
 
 class App extends React.Component {
     state = {
@@ -24,14 +30,14 @@ class App extends React.Component {
 
     render() {
         return (
-            <div>
+            <>
                 <NavBar
                     user={this.state.user}
                     handleLogout={this.handleLogout}
                 />
                 <Switch>
                     {/* Home Page route */}
-                    <Route exact path="/" render={() => <></>} />
+                    <Route exact path="/" render={() => <HomePage />} />
                     {/* Sign Up Route */}
                     <Route
                         exact
@@ -63,7 +69,7 @@ class App extends React.Component {
                     {/* View Board Route */}
                     <Route path="/boards/:id" render={() => <BusyList />} />
                 </Switch>
-            </div>
+            </>
         );
     }
 }
