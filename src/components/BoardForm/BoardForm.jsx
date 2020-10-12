@@ -39,6 +39,7 @@ const BoardForm = (props) => {
                 />
                 <button>Add Board</button>
             </form>
+            <button onClick={() => props.handleNewBoardForm()}>Cancel</button>
         </FormContainer>
     );
 };

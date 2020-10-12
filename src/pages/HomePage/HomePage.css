@@ -1,0 +1,11 @@
+.HomePage-board {
+    display: flex;
+    height: 100%;
+    width: 80%;
+    align-items: center;
+    padding-left: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 15px;
+}
