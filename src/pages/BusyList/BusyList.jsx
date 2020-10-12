@@ -17,8 +17,8 @@ const ContainerRow = styled.div`
 `;
 
 const BoardRow = styled.div`
+    height: 93vh;
     overflow-x: scroll;
-    height: 100%;
 `;
 
 class InnerList extends React.PureComponent {

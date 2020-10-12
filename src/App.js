@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import styled from 'styled-components';
 
 import userService from './services/userService';
 
@@ -8,6 +9,10 @@ import BusyList from './pages/BusyList/BusyList';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
 import HomePage from './pages/HomePage/HomePage';
+
+const Container = styled.div`
+    max-height: 100vh;
+`;
 
 class App extends React.Component {
     state = {
@@ -25,7 +30,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <>
+            <Container>
                 <NavBar
                     user={this.state.user}
                     handleLogout={this.handleLogout}
@@ -64,7 +69,7 @@ class App extends React.Component {
                     {/* View Board Route */}
                     <Route path="/boards/:id" render={() => <BusyList />} />
                 </Switch>
-            </>
+            </Container>
         );
     }
 }
