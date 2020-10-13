@@ -31,9 +31,12 @@ class InnerList extends React.PureComponent {
                         key={index}
                         column={column}
                         index={index}
-                        boardId={this.props.boardId}
+                        board={this.props.board}
                         handleTaskCreate={this.props.handleTaskCreate}
                         handleColumnDelete={this.props.handleColumnDelete}
+                        handleColumnSubmitRename={
+                            this.props.handleColumnSubmitRename
+                        }
                     />
                 ))}
             </>
@@ -62,6 +65,18 @@ class BusyList extends React.Component {
         this.setState({ loading: true });
         const board = await boardApi.deleteColumn(this.state.board._id, column);
         this.setState({ board, loading: false });
+    };
+
+    handleColumnSubmitRename = (column, index) => {
+        let newState = {
+            ...this.state.board,
+            columns: this.state.board.columns.map((column) => {
+                return JSON.parse(JSON.stringify(column));
+            }),
+        };
+        newState.columns.splice(index, 1, column);
+        this.handleUpdateBoard(newState);
+        this.setState({ board: newState });
     };
 
     onDragEnd = (result) => {
@@ -121,13 +136,16 @@ class BusyList extends React.Component {
                                 >
                                     <InnerList
                                         columns={this.state.board.columns}
+                                        board={this.state.board}
                                         handleTaskCreate={
                                             this.handleComponentCreation
                                         }
                                         handleColumnDelete={
                                             this.handleColumnDelete
                                         }
-                                        boardId={this.state.board._id}
+                                        handleColumnSubmitRename={
+                                            this.handleColumnSubmitRename
+                                        }
                                     />
                                     {provided.placeholder}
                                 </Container>

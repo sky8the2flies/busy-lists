@@ -5,7 +5,7 @@ const columnCtrl = require('../../controllers/api/columns');
 
 //POST /api/boards/:id/columns
 router.post('/:id/columns', columnCtrl.createColumn);
-//DELETEE /api/boards/:id/columns/:cid
+//DELETE /api/boards/:id/columns/:cid
 router.delete('/:id/columns/:cid', columnCtrl.deleteColumn);
 
 function checkAuth(req, res, next) {

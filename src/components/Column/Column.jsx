@@ -5,6 +5,7 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 import Task from '../Task/Task';
 import TaskForm from '../TaskForm/TaskForm';
 import Options from '../../modals/Options';
+import RenameColumnForm from '../RenameColumnForm/RenameColumnForm';
 
 const ContainerColumn = styled.div``;
 
@@ -61,7 +62,26 @@ class InnerList extends React.PureComponent {
 }
 
 export default class Column extends React.Component {
+    state = {
+        rename: false,
+    };
+
+    handleSubmitRename = (column, index) => {
+        this.setState({ rename: false });
+        this.props.handleColumnSubmitRename(column, index);
+    };
+
     render() {
+        const content = this.state.rename ? (
+            <RenameColumnForm
+                column={this.props.column}
+                index={this.props.index}
+                board={this.props.board}
+                handleSubmitRename={this.handleSubmitRename}
+            />
+        ) : (
+            <>{this.props.column.title}</>
+        );
         return (
             <Draggable
                 draggableId={String(this.props.index)}
@@ -77,9 +97,16 @@ export default class Column extends React.Component {
                                 {...provided.dragHandleProps}
                                 isDragging={snapshot.isDragging}
                             >
-                                {this.props.column.title}
+                                {content}
                                 <Options name={this.props.column.title}>
-                                    <OptionsContainer className="clickable">
+                                    <OptionsContainer
+                                        className="clickable"
+                                        onClick={() => {
+                                            this.setState({
+                                                rename: !this.state.rename,
+                                            });
+                                        }}
+                                    >
                                         Rename
                                     </OptionsContainer>
                                     <OptionsContainer
@@ -110,7 +137,7 @@ export default class Column extends React.Component {
                                         />
                                         {provided.placeholder}
                                         <TaskForm
-                                            boardId={this.props.boardId}
+                                            board={this.props.board}
                                             columnId={this.props.column._id}
                                             handleTaskCreate={
                                                 this.props.handleTaskCreate

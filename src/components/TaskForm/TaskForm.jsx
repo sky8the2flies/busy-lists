@@ -19,7 +19,7 @@ const TaskForm = (props) => {
         e.preventDefault();
         try {
             const board = await boardApi.createTask(
-                props.boardId,
+                props.board._id,
                 props.columnId,
                 form
             );
