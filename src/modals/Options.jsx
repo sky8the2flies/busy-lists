@@ -35,19 +35,17 @@ const OptionTitle = styled.div`
 const Options = (props) => {
     const [menu, setMenu] = useState(false);
     const showMenu = menu ? (
-        <>
-            <OptionsMenu>
-                {props.name ? (
-                    <OptionTitle>
-                        {props.name}
-                        <hr />
-                    </OptionTitle>
-                ) : (
-                    <></>
-                )}
-                <ChildMenu>{props.children}</ChildMenu>
-            </OptionsMenu>
-        </>
+        <OptionsMenu>
+            {props.name ? (
+                <OptionTitle>
+                    {props.name}
+                    <hr />
+                </OptionTitle>
+            ) : (
+                <></>
+            )}
+            <ChildMenu>{props.children}</ChildMenu>
+        </OptionsMenu>
     ) : (
         <></>
     );

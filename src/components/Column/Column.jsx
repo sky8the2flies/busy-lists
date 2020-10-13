@@ -44,10 +44,10 @@ const OptionsContainer = styled.div`
     width: 100%;
     font-size: 15px;
 `;
-// const NewTask = styled.div`
-//     padding: 5px;
-//     text-align: center;
-// `;
+const NewTask = styled.div`
+    padding: 5px;
+    text-align: center;
+`;
 
 class InnerList extends React.PureComponent {
     render() {
@@ -64,11 +64,20 @@ class InnerList extends React.PureComponent {
 export default class Column extends React.Component {
     state = {
         rename: false,
+        newTask: false,
     };
 
     handleSubmitRename = (column, index) => {
         this.setState({ rename: false });
         this.props.handleColumnSubmitRename(column, index);
+    };
+
+    handleCancelRename = () => {
+        this.setState({ rename: false });
+    };
+
+    handleCancelTask = () => {
+        this.setState({ newTask: false });
     };
 
     render() {
@@ -78,9 +87,25 @@ export default class Column extends React.Component {
                 index={this.props.index}
                 board={this.props.board}
                 handleSubmitRename={this.handleSubmitRename}
+                handleCancelRename={this.handleCancelRename}
             />
         ) : (
             <>{this.props.column.title}</>
+        );
+        const taskContent = this.state.newTask ? (
+            <TaskForm
+                board={this.props.board}
+                columnId={this.props.column._id}
+                handleTaskCreate={this.props.handleTaskCreate}
+                handleCancelTask={this.handleCancelTask}
+            />
+        ) : (
+            <NewTask
+                className="clickable"
+                onClick={() => this.setState({ newTask: true })}
+            >
+                + Add new Task
+            </NewTask>
         );
         return (
             <Draggable
@@ -136,13 +161,7 @@ export default class Column extends React.Component {
                                             tasks={this.props.column.tasks}
                                         />
                                         {provided.placeholder}
-                                        <TaskForm
-                                            board={this.props.board}
-                                            columnId={this.props.column._id}
-                                            handleTaskCreate={
-                                                this.props.handleTaskCreate
-                                            }
-                                        />
+                                        {taskContent}
                                     </TaskList>
                                 )}
                             </Droppable>

@@ -39,9 +39,11 @@ const TaskForm = (props) => {
                     placeholder="Enter task name"
                     value={form.content}
                     onChange={handleChange}
+                    autoFocus
                 />
                 <button>Add Task</button>
             </form>
+            <button onClick={() => props.handleCancelTask()}>Cancel</button>
         </FormContainer>
     );
 };
