@@ -2,6 +2,7 @@ export default {
     setToken,
     removeToken,
     getUserFromToken,
+    getAuthMethods,
     getToken,
 };
 
@@ -16,6 +17,14 @@ function removeToken() {
 function getUserFromToken() {
     const token = getToken();
     return token ? JSON.parse(atob(token.split('.')[1])).user : null;
+}
+
+function getAuthMethods() {
+    const token = getToken();
+    return {
+        'Content-type': 'application/json',
+        Authorization: token ? 'Bearer ' + token : null,
+    };
 }
 
 function getToken() {

@@ -11,24 +11,12 @@ export default {
     createTask,
 };
 
-/* IMPORTANT: ANY REQUEST MADE TO CHANGE DATA IN DB, ADD THIS TO HEADERS */
-/**
- * headers: {
- *  'Content-type': 'application/json',
- *  'Authorization': 'Bearer ' + tokenService.getToken()
- * }
- */
-
 const BASE_URL = '/api/boards';
 
 function getAll() {
-    const token = tokenService.getToken();
     return fetch(BASE_URL, {
         method: 'GET',
-        headers: {
-            'Content-type': 'application/json',
-            Authorization: token ? 'Bearer ' + token : null,
-        },
+        headers: tokenService.getAuthMethods(),
     }).then((res) => res.json());
 }
 
@@ -39,10 +27,7 @@ function getOne(id) {
 function createBoard(board) {
     return fetch(`${BASE_URL}`, {
         method: 'POST',
-        headers: {
-            'Content-type': 'application/json',
-            Authorization: 'Bearer ' + tokenService.getToken(),
-        },
+        headers: tokenService.getAuthMethods(),
         body: JSON.stringify(board),
     })
         .then((res) => {
@@ -55,10 +40,7 @@ function createBoard(board) {
 function deleteBoard(boardId) {
     return fetch(`${BASE_URL}/${boardId}`, {
         method: 'DELETE',
-        headers: {
-            'Content-type': 'application/json',
-            Authorization: 'Bearer ' + tokenService.getToken(),
-        },
+        headers: tokenService.getAuthMethods(),
     })
         .then((res) => {
             if (res.ok) return res.json();
@@ -70,7 +52,7 @@ function deleteBoard(boardId) {
 function updateBoard(board) {
     fetch(`${BASE_URL}/${board._id}`, {
         method: 'PUT',
-        headers: new Headers({ 'Content-Type': 'application/json' }),
+        headers: tokenService.getAuthMethods(),
         body: JSON.stringify(board),
     });
 }
@@ -78,7 +60,7 @@ function updateBoard(board) {
 function createColumn(boardId, column) {
     return fetch(`${BASE_URL}/${boardId}/columns`, {
         method: 'POST',
-        headers: new Headers({ 'Content-Type': 'application/json' }),
+        headers: tokenService.getAuthMethods(),
         body: JSON.stringify(column),
     })
         .then((res) => {
@@ -91,7 +73,7 @@ function createColumn(boardId, column) {
 function deleteColumn(boardId, column) {
     return fetch(`${BASE_URL}/${boardId}/columns/${column._id}`, {
         method: 'DELETE',
-        headers: new Headers({ 'Content-Type': 'application/json' }),
+        headers: tokenService.getAuthMethods(),
     })
         .then((res) => {
             if (res.ok) return res.json();
@@ -103,7 +85,7 @@ function deleteColumn(boardId, column) {
 function createTask(boardId, columnId, task) {
     return fetch(`${BASE_URL}/${boardId}/columns/${columnId}`, {
         method: 'POST',
-        headers: new Headers({ 'Content-Type': 'application/json' }),
+        headers: tokenService.getAuthMethods(),
         body: JSON.stringify(task),
     })
         .then((res) => {
