@@ -7,6 +7,7 @@ import boardApi from '../../services/boardApi';
 
 import Column from '../../components/Column/Column';
 import CardForm from '../../components/CardForm/CardForm';
+import Loader from '../../components/Loader/Loader';
 
 const Container = styled.div`
     display: flex;
@@ -40,12 +41,12 @@ class InnerList extends React.PureComponent {
 }
 
 class BusyList extends React.Component {
-    state = { board: { columns: [] } };
+    state = { board: {}, loading: true };
 
     async componentDidMount() {
         const id = this.props.match.params.id;
         const board = await boardApi.getOne(id);
-        this.setState({ board });
+        this.setState({ board, loading: false });
     }
 
     handleUpdateBoard = (updateData) => {
@@ -95,8 +96,10 @@ class BusyList extends React.Component {
     };
 
     render() {
-        return (
-            <BoardRow>
+        const content = this.state.loading ? (
+            <Loader />
+        ) : (
+            <>
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     <Droppable
                         droppableId="all-columns"
@@ -128,8 +131,9 @@ class BusyList extends React.Component {
                         )}
                     </Droppable>
                 </DragDropContext>
-            </BoardRow>
+            </>
         );
+        return <BoardRow>{content}</BoardRow>;
     }
 }
 

@@ -35,6 +35,14 @@ const TaskList = styled.div`
     flex-grow: 1;
     min-height: 25px;
 `;
+const OptionsContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    width: 100%;
+    font-size: 15px;
+`;
 // const NewTask = styled.div`
 //     padding: 5px;
 //     text-align: center;
@@ -70,7 +78,17 @@ export default class Column extends React.Component {
                                 isDragging={snapshot.isDragging}
                             >
                                 {this.props.column.title}
-                                <Options />
+                                <Options name={this.props.column.title}>
+                                    <OptionsContainer className="clickable">
+                                        Rename
+                                    </OptionsContainer>
+                                    <OptionsContainer
+                                        className="clickable"
+                                        style={{ color: 'red' }}
+                                    >
+                                        Delete
+                                    </OptionsContainer>
+                                </Options>
                             </Title>
                             <Droppable
                                 droppableId={String(this.props.index)}
