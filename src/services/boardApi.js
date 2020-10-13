@@ -7,6 +7,7 @@ export default {
     deleteBoard,
     updateBoard,
     createColumn,
+    deleteColumn,
     createTask,
 };
 
@@ -83,6 +84,18 @@ function createColumn(boardId, column) {
         .then((res) => {
             if (res.ok) return res.json();
             throw new Error('I am unsure (column)..');
+        })
+        .then((board) => board);
+}
+
+function deleteColumn(boardId, column) {
+    return fetch(`${BASE_URL}/${boardId}/columns/${column._id}`, {
+        method: 'DELETE',
+        headers: new Headers({ 'Content-Type': 'application/json' }),
+    })
+        .then((res) => {
+            if (res.ok) return res.json();
+            throw new Error('I am unsure (column delete)..');
         })
         .then((board) => board);
 }

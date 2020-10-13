@@ -33,6 +33,7 @@ class InnerList extends React.PureComponent {
                         index={index}
                         boardId={this.props.boardId}
                         handleTaskCreate={this.props.handleTaskCreate}
+                        handleColumnDelete={this.props.handleColumnDelete}
                     />
                 ))}
             </>
@@ -55,6 +56,12 @@ class BusyList extends React.Component {
 
     handleComponentCreation = async (board) => {
         this.setState({ board });
+    };
+
+    handleColumnDelete = async (column) => {
+        this.setState({ loading: true });
+        const board = await boardApi.deleteColumn(this.state.board._id, column);
+        this.setState({ board, loading: false });
     };
 
     onDragEnd = (result) => {
@@ -116,6 +123,9 @@ class BusyList extends React.Component {
                                         columns={this.state.board.columns}
                                         handleTaskCreate={
                                             this.handleComponentCreation
+                                        }
+                                        handleColumnDelete={
+                                            this.handleColumnDelete
                                         }
                                         boardId={this.state.board._id}
                                     />

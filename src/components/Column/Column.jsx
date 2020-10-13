@@ -85,6 +85,11 @@ export default class Column extends React.Component {
                                     <OptionsContainer
                                         className="clickable"
                                         style={{ color: 'red' }}
+                                        onClick={() =>
+                                            this.props.handleColumnDelete(
+                                                this.props.column
+                                            )
+                                        }
                                     >
                                         Delete
                                     </OptionsContainer>
