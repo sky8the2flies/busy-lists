@@ -13,7 +13,7 @@ async function createTask(req, res) {
         if (!column) return res.status(404).json();
         column.tasks.push(req.body);
         await board.save();
-        res.status(201).json(board);
+        return res.status(201).json(board);
     } catch (err) {
         console.log(err);
         return res.status(404).json(err);
