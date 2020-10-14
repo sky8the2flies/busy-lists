@@ -25,6 +25,8 @@ app.use('/api/boards', require('./routes/api/boards'));
 app.use('/api/boards', require('./routes/api/columns'));
 app.use('/api/boards', require('./routes/api/tasks'));
 
+app.use('/api/invites/', require('./routes/api/invites'));
+
 // Catch all route
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
