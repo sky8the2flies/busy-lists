@@ -11,8 +11,7 @@ const FormContainer = styled.div`
     border-radius: 2px;
     width: 220px;
     flex-direction: column;
-    min-height: 50px;
-    height: 75px;
+    max-height: 90px;
     padding: 5px;
 `;
 
@@ -35,6 +34,10 @@ const CardForm = (props) => {
         }
     };
 
+    function isFormValid() {
+        return !form.title;
+    }
+
     return (
         <FormContainer>
             <form onSubmit={handleSubmit}>
@@ -44,7 +47,7 @@ const CardForm = (props) => {
                     value={form.title}
                     onChange={handleChange}
                 />
-                <button>Add Card</button>
+                <button disabled={isFormValid()}>Add Card</button>
             </form>
         </FormContainer>
     );

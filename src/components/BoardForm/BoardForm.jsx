@@ -28,6 +28,10 @@ const BoardForm = (props) => {
         }
     };
 
+    function isFormValid() {
+        return !form.name;
+    }
+
     return (
         <FormContainer>
             <form onSubmit={handleSubmit}>
@@ -37,7 +41,7 @@ const BoardForm = (props) => {
                     value={form.name}
                     onChange={handleChange}
                 />
-                <button>Add Board</button>
+                <button disabled={isFormValid()}>Add Board</button>
                 <p className="btn" onClick={() => props.handleNewBoardForm()}>
                     Cancel
                 </p>

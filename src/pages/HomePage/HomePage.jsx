@@ -12,7 +12,7 @@ import RenameBoardForm from '../../components/RenameBoardForm/RenameBoardForm';
 
 const PageContainer = styled.div`
     display: flex;
-    flex-grow: 1;
+    height: 94.5vh;
 `;
 
 const Container = styled.div`
@@ -21,7 +21,7 @@ const Container = styled.div`
     align-content: flex-start;
     justify-content: flex-start;
     background-color: lightgray;
-    height: 94vh;
+    height: 100%;
     padding: 10px;
     width: 25vw;
     max-width: 300px;
@@ -166,19 +166,24 @@ class HomePage extends React.Component {
             />
         ) : (
             <NewFormContainer
-                className={'clickable'}
+                className={'clickable btn'}
                 onClick={() => this.handleNewBoardForm()}
             >
                 + New Board
             </NewFormContainer>
         );
+        const sideBar = this.props.user ? (
+            <Container>
+                {content}
+                {newForm}
+            </Container>
+        ) : (
+            <></>
+        );
 
         return (
             <PageContainer>
-                <Container>
-                    {content}
-                    {newForm}
-                </Container>
+                {sideBar}
                 <div>
                     <h1>Home Page</h1>
                 </div>

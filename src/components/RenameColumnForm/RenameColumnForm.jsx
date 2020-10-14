@@ -25,6 +25,10 @@ const RenameColumnForm = (props) => {
         }
     };
 
+    function isFormValid() {
+        return !form.title;
+    }
+
     return (
         <FormContainer>
             <form onSubmit={handleSubmit}>
@@ -34,7 +38,7 @@ const RenameColumnForm = (props) => {
                     value={form.title}
                     onChange={handleChange}
                 />
-                <button>Submit</button>
+                <button disabled={isFormValid()}>Submit</button>
             </form>
             <button onClick={() => props.handleCancelRename()}>Cancel</button>
         </FormContainer>

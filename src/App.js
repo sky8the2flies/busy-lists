@@ -40,7 +40,12 @@ class App extends React.Component {
                     <Route
                         exact
                         path="/"
-                        render={({ history }) => <HomePage history={history} />}
+                        render={({ history }) => (
+                            <HomePage
+                                user={this.state.user}
+                                history={history}
+                            />
+                        )}
                     />
                     {/* Sign Up Route */}
                     <Route

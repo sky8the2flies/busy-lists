@@ -30,6 +30,10 @@ const TaskForm = (props) => {
         }
     };
 
+    function isFormValid() {
+        return !form.content;
+    }
+
     return (
         <FormContainer>
             <form onSubmit={handleSubmit}>
@@ -40,7 +44,7 @@ const TaskForm = (props) => {
                     onChange={handleChange}
                     autoFocus
                 />
-                <button>Add Task</button>
+                <button disabled={isFormValid()}>Add Task</button>
                 <p className="btn" onClick={() => props.handleCancelTask()}>
                     Cancel
                 </p>
