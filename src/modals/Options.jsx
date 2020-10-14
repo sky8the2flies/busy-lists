@@ -52,10 +52,14 @@ const Options = (props) => {
     return (
         <>
             <ParentMenu>
-                <i
-                    onClick={() => setMenu(!menu)}
-                    className={'clickable fas fa-ellipsis-h'}
-                ></i>
+                {props.content ? (
+                    <>{props.content}</>
+                ) : (
+                    <i
+                        onClick={() => setMenu(!menu)}
+                        className={'clickable fas fa-ellipsis-h'}
+                    ></i>
+                )}
                 {showMenu}
             </ParentMenu>
         </>
