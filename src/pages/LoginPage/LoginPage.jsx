@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 
 import userService from '../../services/userService';
 
-import FormModal from '../../modals/FormModal';
-
 class LoginPage extends React.Component {
     state = {
         email: '',

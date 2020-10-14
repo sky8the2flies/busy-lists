@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import FormModal from '../../modals/FormModal';
 import userService from '../../services/userService';
 
 class SignupPage extends React.Component {
