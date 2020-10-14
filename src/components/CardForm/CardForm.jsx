@@ -12,8 +12,8 @@ const FormContainer = styled.div`
     width: 220px;
     flex-direction: column;
     min-height: 50px;
+    height: 75px;
     padding: 5px;
-    height: 50px;
 `;
 
 const CardForm = (props) => {

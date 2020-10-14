@@ -38,8 +38,10 @@ const RenameBoardForm = (props) => {
                     onChange={handleChange}
                 />
                 <button>Submit</button>
+                <p className="btn" onClick={() => props.handleCancelRename()}>
+                    Cancel
+                </p>
             </form>
-            <button onClick={() => props.handleCancelRename()}>Cancel</button>
         </FormContainer>
     );
 };

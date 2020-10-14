@@ -5,7 +5,6 @@ import boardApi from '../../services/boardApi';
 
 const FormContainer = styled.div`
     margin: 2px 5px;
-    height: 50px;
 `;
 
 const TaskForm = (props) => {
@@ -42,8 +41,10 @@ const TaskForm = (props) => {
                     autoFocus
                 />
                 <button>Add Task</button>
+                <p className="btn" onClick={() => props.handleCancelTask()}>
+                    Cancel
+                </p>
             </form>
-            <button onClick={() => props.handleCancelTask()}>Cancel</button>
         </FormContainer>
     );
 };

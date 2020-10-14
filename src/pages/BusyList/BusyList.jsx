@@ -149,12 +149,14 @@ class BusyList extends React.Component {
                                     />
                                     {provided.placeholder}
                                 </Container>
-                                <CardForm
-                                    boardId={this.state.board._id}
-                                    handleColumnCreate={
-                                        this.handleComponentCreation
-                                    }
-                                />
+                                <Container>
+                                    <CardForm
+                                        boardId={this.state.board._id}
+                                        handleColumnCreate={
+                                            this.handleComponentCreation
+                                        }
+                                    />
+                                </Container>
                             </ContainerRow>
                         )}
                     </Droppable>

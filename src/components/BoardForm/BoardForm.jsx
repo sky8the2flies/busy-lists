@@ -38,8 +38,10 @@ const BoardForm = (props) => {
                     onChange={handleChange}
                 />
                 <button>Add Board</button>
+                <p className="btn" onClick={() => props.handleNewBoardForm()}>
+                    Cancel
+                </p>
             </form>
-            <button onClick={() => props.handleNewBoardForm()}>Cancel</button>
         </FormContainer>
     );
 };
