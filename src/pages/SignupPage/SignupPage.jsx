@@ -6,6 +6,7 @@ import userService from '../../services/userService';
 
 class SignupPage extends React.Component {
     state = {
+        username: '',
         email: '',
         password: '',
         passwordConf: '',
@@ -31,45 +32,51 @@ class SignupPage extends React.Component {
 
     isFormInvalid() {
         return !(
-            this.state.email && this.state.password === this.state.passwordConf
+            this.state.username &&
+            this.state.email &&
+            this.state.password === this.state.passwordConf
         );
     }
 
     render() {
         return (
-            <FormModal title="Sign up" className="SignupPage">
+            <div className="container">
+                <h1>Sign up</h1>
                 <form onSubmit={this.handleSubmit}>
-                    <div>
-                        <div>
-                            <input
-                                type="email"
-                                placeholder="Email"
-                                value={this.state.email}
-                                name="email"
-                                onChange={this.handleChange}
-                            />
-                        </div>
-                        <div>
-                            <input
-                                type="password"
-                                placeholder="Password"
-                                value={this.state.password}
-                                name="password"
-                                onChange={this.handleChange}
-                            />
-                        </div>
-                        <div>
-                            <input
-                                type="password"
-                                placeholder="Confirm Password"
-                                value={this.state.passwordConf}
-                                name="passwordConf"
-                                onChange={this.handleChange}
-                            />
-                        </div>
-                        <button disabled={this.isFormInvalid()}>Sign Up</button>
-                        <Link to="/">Cancel</Link>
+                    <div className="container-col">
+                        <input
+                            type="text"
+                            placeholder="Display name"
+                            value={this.state.username}
+                            name="username"
+                            onChange={this.handleChange}
+                        />
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            value={this.state.email}
+                            name="email"
+                            onChange={this.handleChange}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            value={this.state.password}
+                            name="password"
+                            onChange={this.handleChange}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Confirm Password"
+                            value={this.state.passwordConf}
+                            name="passwordConf"
+                            onChange={this.handleChange}
+                        />
                     </div>
+                    <button disabled={this.isFormInvalid()}>Sign Up</button>
+                    <Link className="btn reset-link" to="/">
+                        Cancel
+                    </Link>
                 </form>
                 <div>
                     <p>
@@ -77,7 +84,7 @@ class SignupPage extends React.Component {
                         <Link to="/accounts/login">Login</Link>
                     </p>
                 </div>
-            </FormModal>
+            </div>
         );
     }
 }

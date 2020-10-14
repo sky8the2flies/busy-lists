@@ -30,8 +30,10 @@ form {
     flex-wrap: wrap;
 }
 
-form > input {
+input {
     width: 100%;
+    max-width: 200px;
+    margin: 5px;
     padding: 5px;
     border-radius: 5px;
     border: 1px solid lightgray;
@@ -46,6 +48,7 @@ button {
 
 button:hover {
     opacity: 0.8;
+    cursor: pointer;
 }
 
 .btn {
@@ -61,4 +64,15 @@ button:hover {
 
 .btn:hover {
     opacity: 0.8;
+}
+
+.container {
+    width: 100%;
+    padding: 10px 20px;
+}
+
+.container-col {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }

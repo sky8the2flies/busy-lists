@@ -31,30 +31,30 @@ class LoginPage extends React.Component {
 
     render() {
         return (
-            <FormModal title="Log In" className="LoginPage">
+            <div className="container">
+                <h1>Login</h1>
                 <form onSubmit={this.handleSubmit}>
-                    <div>
-                        <div>
-                            <input
-                                type="email"
-                                placeholder="Email"
-                                value={this.state.email}
-                                name="email"
-                                onChange={this.handleChange}
-                            />
-                        </div>
-                        <div>
-                            <input
-                                type="password"
-                                placeholder="Password"
-                                value={this.state.password}
-                                name="password"
-                                onChange={this.handleChange}
-                            />
-                        </div>
-                        <button>Log In</button>
-                        <Link to="/">Cancel</Link>
+                    <div className="container-col">
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            value={this.state.email}
+                            name="email"
+                            onChange={this.handleChange}
+                        />
+
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            value={this.state.password}
+                            name="password"
+                            onChange={this.handleChange}
+                        />
                     </div>
+                    <button>Log In</button>
+                    <Link className="btn reset-link" to="/">
+                        Cancel
+                    </Link>
                 </form>
                 <div>
                     <p>
@@ -62,7 +62,7 @@ class LoginPage extends React.Component {
                         <Link to="/accounts/signup">Sign Up</Link>
                     </p>
                 </div>
-            </FormModal>
+            </div>
         );
     }
 }

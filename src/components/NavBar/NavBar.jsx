@@ -2,15 +2,27 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Container = styled.div`
+const ContainerRight = styled.div`
     display: flex;
-    height: 50px;
-    background-color: white;
-    box-shadow: 0px 0px 5px 1px lightgrey;
-    margin-bottom: 5px;
     align-content: center;
     justify-content: flex-end;
     align-items: center;
+`;
+
+const ContainerLeft = styled.div`
+    display: flex;
+    align-content: center;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 20px;
+`;
+
+const Container = styled.div`
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    background-color: white;
+    box-shadow: 0px 0px 5px 1px lightgrey;
 `;
 
 const NavLink = styled.div`
@@ -24,7 +36,7 @@ const NavLink = styled.div`
 const NavBar = (props) => {
     let loggedIn = props.user ? (
         <>
-            <p>Welcome user.</p>
+            <p>Welcome {props.user.username}</p>
             <Link to="/">
                 <NavLink onClick={props.handleLogout}>Log out</NavLink>
             </Link>
@@ -39,7 +51,18 @@ const NavBar = (props) => {
             </Link>
         </>
     );
-    return <Container>{loggedIn}</Container>;
+    return (
+        <Container>
+            <ContainerLeft>
+                <Link to="/">
+                    <h1>
+                        <i className="far fa-calendar-check"></i>
+                    </h1>
+                </Link>
+            </ContainerLeft>
+            <ContainerRight>{loggedIn}</ContainerRight>
+        </Container>
+    );
 };
 
 export default NavBar;
