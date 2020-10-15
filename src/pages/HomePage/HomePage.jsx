@@ -112,7 +112,11 @@ class HomePage extends React.Component {
                                     className={'HomePage-board reset-link'}
                                     to={`/boards/${board._id}`}
                                 >
-                                    {board.name}
+                                    {`${board.name} ${
+                                        board.authors[0] === this.props.user._id
+                                            ? 'A'
+                                            : ''
+                                    }`}
                                 </Link>
                                 <Options name={board.name}>
                                     <Link

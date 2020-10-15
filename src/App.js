@@ -70,12 +70,6 @@ class App extends React.Component {
                             />
                         )}
                     />
-                    {/* Profile Route */}
-                    <Route
-                        exact
-                        path="/accounts/profile"
-                        render={() => <></>}
-                    />
                     {/* View Board Route */}
                     <Route
                         path="/boards/:id"

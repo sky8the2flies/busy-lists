@@ -45,7 +45,15 @@ async function createBoard(req, res) {
 
 async function deleteBoard(req, res) {
     try {
-        const board = await Board.findByIdAndDelete(req.params.id);
+        const board = await Board.findById(req.params.id);
+        if (board.authors.length > 1) {
+            const index = board.authors.findIndex(
+                (author) => String(author._id) === String(req.user._id)
+            );
+            board.authors.splice(index, 1);
+            await board.save();
+        } else board.remove();
+
         return res.status(200).json(board);
     } catch (err) {
         console.log(err);
