@@ -4,10 +4,14 @@ import { withRouter } from 'react-router-dom';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import boardApi from '../../services/boardApi';
+import inviteApi from '../../services/inviteApi';
 
+import NewInviteForm from '../../components/NewInviteForm/NewInviteForm';
 import Column from '../../components/Column/Column';
 import CardForm from '../../components/CardForm/CardForm';
 import Loader from '../../components/Loader/Loader';
+import Options from '../../modals/Options';
+import Copy from '../../components/Copy/Copy';
 
 const Container = styled.div`
     display: flex;
@@ -18,8 +22,17 @@ const ContainerRow = styled.div`
 `;
 
 const BoardRow = styled.div`
-    height: 93vh;
+    height: 94.5vh;
     overflow-x: scroll;
+`;
+
+const Title = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    height: 50px;
+    background-color: lightgray;
 `;
 
 class InnerList extends React.PureComponent {
@@ -44,13 +57,20 @@ class InnerList extends React.PureComponent {
     }
 }
 
+let mounted = false;
+
 class BusyList extends React.Component {
-    state = { board: {}, loading: true };
+    state = { board: {}, invites: [], loading: true };
 
     async componentDidMount() {
+        mounted = true;
         const id = this.props.match.params.id;
         const board = await boardApi.getOne(id);
-        this.setState({ board, loading: false });
+        const invites = await inviteApi.getAll(board);
+        if (mounted) this.setState({ board, invites, loading: false });
+    }
+    componentWillUnmount() {
+        mounted = false;
     }
 
     handleUpdateBoard = (updateData) => {
@@ -77,6 +97,12 @@ class BusyList extends React.Component {
         newState.columns.splice(index, 1, column);
         this.handleUpdateBoard(newState);
         this.setState({ board: newState });
+    };
+
+    handleInviteCreate = (invite) => {
+        const newState = [...this.state.invites];
+        newState.push(invite);
+        this.setState({ invites: newState });
     };
 
     onDragEnd = (result) => {
@@ -163,7 +189,35 @@ class BusyList extends React.Component {
                 </DragDropContext>
             </>
         );
-        return <BoardRow>{content}</BoardRow>;
+        return (
+            <BoardRow>
+                <Title>
+                    <div>
+                        <h1>{this.state.board.name}</h1>
+                    </div>
+                    <div>
+                        <h5>
+                            <Options
+                                left={true}
+                                content=" Invite link"
+                                label={'fas fa-user-plus'}
+                                name="Invites"
+                            >
+                                {this.state.invites.map((invite, index) => (
+                                    <Copy key={index} invite={invite} />
+                                ))}
+                                <hr />
+                                <NewInviteForm
+                                    board={this.state.board}
+                                    handleInviteCreate={this.handleInviteCreate}
+                                />
+                            </Options>
+                        </h5>
+                    </div>
+                </Title>
+                {content}
+            </BoardRow>
+        );
     }
 }
 

@@ -3,10 +3,10 @@ const router = express.Router();
 
 const inviteCtrl = require('../../controllers/api/invites');
 
-//GET /api/invites/
-router.get('/', inviteCtrl.getAll);
 //POST /api/invites/
-router.post('/', inviteCtrl.createInvite);
+router.post('/', inviteCtrl.getAll);
+//POST /api/invites/
+router.post('/create', inviteCtrl.createInvite);
 //GET /api/invites/:id
 router.get('/:id', inviteCtrl.getOne);
 

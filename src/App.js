@@ -9,6 +9,7 @@ import BusyList from './pages/BusyList/BusyList';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
 import HomePage from './pages/HomePage/HomePage';
+import InvitePage from './pages/InvitePage/InvitePage';
 
 const Container = styled.div`
     max-height: 100vh;
@@ -81,6 +82,16 @@ class App extends React.Component {
                         render={() =>
                             userService.getUser() ? (
                                 <BusyList />
+                            ) : (
+                                <Redirect to="/accounts/login" />
+                            )
+                        }
+                    />
+                    <Route
+                        path="/invites/:id"
+                        render={() =>
+                            userService.getUser() ? (
+                                <InvitePage />
                             ) : (
                                 <Redirect to="/accounts/login" />
                             )

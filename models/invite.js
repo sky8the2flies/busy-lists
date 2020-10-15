@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const inviteSchema = new mongoose.Schema(
     {
-        email: { type: String, required: true },
+        uses: { type: Number, required: true },
         board: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Board',

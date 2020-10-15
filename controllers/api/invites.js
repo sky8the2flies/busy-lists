@@ -1,5 +1,4 @@
 const Invite = require('../../models/invite');
-const User = require('../../models/user');
 const Board = require('../../models/board');
 
 module.exports = {
@@ -11,10 +10,20 @@ module.exports = {
 async function getOne(req, res) {
     try {
         const invite = await Invite.findById(req.params.id).populate('board');
-        const user = await User.find({ email: invite.email });
+        if (!invite) return res.status(404).json(null);
         const board = await Board.findById(invite.board._id);
-        board.authors.push(user._id);
+        if (board.authors.includes(req.user._id)) {
+            return res.status(200).json(board);
+        }
+        board.authors.push(req.user._id);
         await board.save();
+        if (invite.uses) {
+            if (invite.uses === 1) invite.remove();
+            else {
+                invite.uses -= 1;
+                await invite.save();
+            }
+        }
         return res.status(202).json(board);
     } catch (err) {
         console.log(err);
@@ -24,7 +33,7 @@ async function getOne(req, res) {
 
 async function getAll(req, res) {
     try {
-        const invites = await Invite.find({ email: req.user.email });
+        const invites = await Invite.find({ board: req.body._id });
         return res.status(200).json(invites);
     } catch (err) {
         console.log(err);
