@@ -63,7 +63,7 @@ class HomePage extends React.Component {
     };
 
     async componentDidMount() {
-        const boards = await boardApi.getAll();
+        let boards = await boardApi.getAll();
         this.setState({ boards, loading: false });
     }
 

@@ -22,8 +22,11 @@ const ContainerRow = styled.div`
 `;
 
 const BoardRow = styled.div`
-    height: 94.5vh;
+    min-height: 89.5vh;
     overflow-x: scroll;
+`;
+
+const PageContainer = styled.div`
     background-image: url(https://images.unsplash.com/photo-1540171803164-3b88c6bf8eca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1345&q=80);
 `;
 
@@ -33,7 +36,7 @@ const Title = styled.div`
     align-items: center;
     padding: 20px;
     height: 50px;
-    background-color: #84a9ac;
+    color: white;
 `;
 
 class InnerList extends React.PureComponent {
@@ -191,10 +194,12 @@ class BusyList extends React.Component {
             </>
         );
         return (
-            <>
+            <PageContainer>
                 <Title>
                     <div>
-                        <h1>{this.state.board.name}</h1>
+                        <h1 style={{ color: 'white', letterSpacing: '1px' }}>
+                            {this.state.board.name}
+                        </h1>
                     </div>
                     <div>
                         <h5>
@@ -203,6 +208,7 @@ class BusyList extends React.Component {
                                 content=" Invite link"
                                 label={'fas fa-user-plus'}
                                 name="Invites"
+                                color="white"
                             >
                                 {this.state.invites.map((invite, index) => (
                                     <Copy key={index} invite={invite} />
@@ -217,7 +223,7 @@ class BusyList extends React.Component {
                     </div>
                 </Title>
                 <BoardRow>{content}</BoardRow>
-            </>
+            </PageContainer>
         );
     }
 }

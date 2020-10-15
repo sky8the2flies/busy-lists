@@ -10,6 +10,7 @@ const ParentMenu = styled.div`
 `;
 
 const OptionsMenu = styled.div`
+    box-shadow: 0 0 5px 1px lightgray;
     position: absolute;
     min-width: 150px;
     min-height: 40px;
@@ -56,6 +57,7 @@ const Options = (props) => {
                     <i
                         onClick={() => setMenu(!menu)}
                         className={`clickable ${props.label}`}
+                        style={{ color: props.color || 'black' }}
                     >
                         {props.content}
                     </i>
@@ -63,6 +65,7 @@ const Options = (props) => {
                     <i
                         onClick={() => setMenu(!menu)}
                         className={'clickable fas fa-ellipsis-h'}
+                        style={{ color: props.color || 'black' }}
                     >
                         {props.content}
                     </i>
