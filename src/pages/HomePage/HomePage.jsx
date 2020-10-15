@@ -102,7 +102,7 @@ class HomePage extends React.Component {
     render() {
         const content = this.state.loading ? (
             <Loader />
-        ) : (
+        ) : this.props.user ? (
             <>
                 {this.state.boards.map((board, index) => (
                     <BoardContainer key={board._id}>
@@ -161,6 +161,8 @@ class HomePage extends React.Component {
                     </BoardContainer>
                 ))}
             </>
+        ) : (
+            <></>
         );
         const newForm = this.state.newForm ? (
             <BoardForm
