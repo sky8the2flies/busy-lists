@@ -20,7 +20,7 @@ const Container = styled.div`
     flex-direction: column;
     align-content: flex-start;
     justify-content: flex-start;
-    background-color: lightgray;
+    background-color: #e4e3e3;
     height: 100%;
     padding: 10px;
     width: 25vw;
@@ -33,7 +33,9 @@ const BoardContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    min-height: 40px;
+    min-height: 35px;
+    font-weight: 500;
+    letter-spacing: 1px;
 `;
 
 const NewFormContainer = styled.div`
@@ -112,11 +114,17 @@ class HomePage extends React.Component {
                                     className={'HomePage-board reset-link'}
                                     to={`/boards/${board._id}`}
                                 >
-                                    {`${board.name} ${
-                                        board.authors[0] === this.props.user._id
-                                            ? 'A'
-                                            : ''
-                                    }`}
+                                    <p>
+                                        {board.name}{' '}
+                                        <span>
+                                            {board.authors[0] ===
+                                            this.props.user._id ? (
+                                                <i class="far fa-check-circle"></i>
+                                            ) : (
+                                                ''
+                                            )}
+                                        </span>
+                                    </p>
                                 </Link>
                                 <Options name={board.name}>
                                     <Link

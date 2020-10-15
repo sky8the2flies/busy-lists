@@ -5,7 +5,6 @@ import boardApi from '../../services/boardApi';
 
 const FormContainer = styled.div`
     display: flex;
-    box-shadow: 0px 0px 5px 1px lightgray;
     margin: 8px;
     background-color: white;
     border-radius: 2px;

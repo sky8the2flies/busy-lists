@@ -14,7 +14,6 @@ const OptionsMenu = styled.div`
     min-width: 150px;
     min-height: 40px;
     background-color: white;
-    box-shadow: 2px 2px 10px 1px lightgray;
     padding: 5px;
     border-radius: 5px;
     ${(props) => (props.left ? `right:` : 'left:')} ${(props) =>

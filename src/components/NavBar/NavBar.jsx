@@ -23,20 +23,22 @@ const Container = styled.div`
     height: 50px;
     background-color: white;
     box-shadow: 0px 0px 5px 1px lightgrey;
+    background-color: #3b6978;
 `;
 
 const NavLink = styled.div`
-    width: 50px;
+    min-width: 50px;
     height: 100%;
     text-align: center;
     margin: 0px 10px;
-    color: black;
+    color: white;
+    font-weight: 800;
 `;
 
 const NavBar = (props) => {
     let loggedIn = props.user ? (
         <>
-            <p>Welcome {props.user.username}</p>
+            <p style={{ color: 'white' }}>Welcome {props.user.username}</p>
             <Link to="/">
                 <NavLink onClick={props.handleLogout}>Log out</NavLink>
             </Link>
@@ -44,10 +46,10 @@ const NavBar = (props) => {
     ) : (
         <>
             <Link to={'/accounts/login'}>
-                <NavLink>Login</NavLink>
+                <NavLink>LOGIN</NavLink>
             </Link>
             <Link to={'/accounts/signup'}>
-                <NavLink>Sign Up</NavLink>
+                <NavLink>SIGN UP</NavLink>
             </Link>
         </>
     );
@@ -56,7 +58,10 @@ const NavBar = (props) => {
             <ContainerLeft>
                 <Link to="/">
                     <h1>
-                        <i className="far fa-calendar-check"></i>
+                        <i
+                            style={{ color: 'white' }}
+                            className="far fa-calendar-check"
+                        ></i>
                     </h1>
                 </Link>
             </ContainerLeft>

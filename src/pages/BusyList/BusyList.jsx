@@ -24,6 +24,7 @@ const ContainerRow = styled.div`
 const BoardRow = styled.div`
     height: 94.5vh;
     overflow-x: scroll;
+    background-image: url(https://images.unsplash.com/photo-1540171803164-3b88c6bf8eca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1345&q=80);
 `;
 
 const Title = styled.div`
@@ -32,7 +33,7 @@ const Title = styled.div`
     align-items: center;
     padding: 20px;
     height: 50px;
-    background-color: lightgray;
+    background-color: #84a9ac;
 `;
 
 class InnerList extends React.PureComponent {

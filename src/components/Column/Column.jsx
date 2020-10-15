@@ -10,7 +10,6 @@ import RenameColumnForm from '../RenameColumnForm/RenameColumnForm';
 const ContainerColumn = styled.div``;
 
 const Container = styled.div`
-    box-shadow: 0px 0px 5px 1px lightgray;
     margin: 8px;
     background-color: white;
     border-radius: 2px;
@@ -26,13 +25,13 @@ const Title = styled.div`
     padding: 8px;
     border-bottom: 1px solid lightgrey;
     transition: background-color 0.2s ease;
-    background-color: ${(props) => (props.isDragging ? 'lightgreen' : 'white')};
+    background-color: ${(props) => (props.isDragging ? '#40a8c4' : 'white')};
 `;
 const TaskList = styled.div`
     padding: 8px;
     transition: background-color 0.2s ease;
     background-color: ${(props) =>
-        props.isDraggingOver ? 'lightgray' : 'inherit'};
+        props.isDraggingOver ? '#e5e5e5' : 'inherit'};
     flex-grow: 1;
     min-height: 25px;
 `;
