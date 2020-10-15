@@ -19,7 +19,7 @@ const InvitePage = (props) => {
         return () => {
             setContent({ loading: false });
         };
-    }, []);
+    }, [id]);
     const invite = content.loading ? (
         <Loader />
     ) : (

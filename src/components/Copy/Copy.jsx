@@ -9,7 +9,13 @@ const Copy = (props) => {
     const [copy, setCopy] = useState(false);
     return (
         <div className={'container-row center'}>
-            <p>{props.invite.uses ? props.invites.uses : 'Infinite'} uses</p>
+            <p>
+                {props.invite.uses
+                    ? `${props.invite.uses} use${
+                          props.invite.uses === 1 ? '' : 's'
+                      }`
+                    : 'Infinite'}
+            </p>
             <CopyToClipboard text={text} onCopy={() => setCopy(true)}>
                 <span className="btn">{copy ? 'Copied!' : 'Copy'}</span>
             </CopyToClipboard>

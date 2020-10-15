@@ -39,8 +39,10 @@ const RenameColumnForm = (props) => {
                     onChange={handleChange}
                 />
                 <button disabled={isFormValid()}>Submit</button>
+                <p className="btn" onClick={() => props.handleCancelRename()}>
+                    Cancel
+                </p>
             </form>
-            <button onClick={() => props.handleCancelRename()}>Cancel</button>
         </FormContainer>
     );
 };

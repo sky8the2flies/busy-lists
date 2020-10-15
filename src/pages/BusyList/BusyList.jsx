@@ -190,7 +190,7 @@ class BusyList extends React.Component {
             </>
         );
         return (
-            <BoardRow>
+            <>
                 <Title>
                     <div>
                         <h1>{this.state.board.name}</h1>
@@ -215,8 +215,8 @@ class BusyList extends React.Component {
                         </h5>
                     </div>
                 </Title>
-                {content}
-            </BoardRow>
+                <BoardRow>{content}</BoardRow>
+            </>
         );
     }
 }
