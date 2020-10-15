@@ -11,13 +11,14 @@ const ParentMenu = styled.div`
 
 const OptionsMenu = styled.div`
     position: absolute;
-    width: 150px;
+    min-width: 150px;
     min-height: 40px;
     background-color: white;
     box-shadow: 2px 2px 10px 1px lightgray;
     padding: 5px;
     border-radius: 5px;
-    left: 20px;
+    ${(props) => (props.left ? `right:` : 'left:')} ${(props) =>
+        props.content ? `${10 + props.content.length * 7}px` : '25px'};
     top: -10px;
 `;
 
@@ -35,7 +36,7 @@ const OptionTitle = styled.div`
 const Options = (props) => {
     const [menu, setMenu] = useState(false);
     const showMenu = menu ? (
-        <OptionsMenu>
+        <OptionsMenu content={props.content} left={props.left}>
             {props.name ? (
                 <OptionTitle>
                     {props.name}
@@ -52,13 +53,20 @@ const Options = (props) => {
     return (
         <>
             <ParentMenu>
-                {props.content ? (
-                    <>{props.content}</>
+                {props.label ? (
+                    <i
+                        onClick={() => setMenu(!menu)}
+                        className={`clickable ${props.label}`}
+                    >
+                        {props.content}
+                    </i>
                 ) : (
                     <i
                         onClick={() => setMenu(!menu)}
                         className={'clickable fas fa-ellipsis-h'}
-                    ></i>
+                    >
+                        {props.content}
+                    </i>
                 )}
                 {showMenu}
             </ParentMenu>
