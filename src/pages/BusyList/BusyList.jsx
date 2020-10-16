@@ -22,8 +22,8 @@ const ContainerRow = styled.div`
 `;
 
 const BoardRow = styled.div`
-    min-height: 89.5vh;
-    overflow-x: scroll;
+    min-height: 89.3vh;
+    overflow-x: auto;
 `;
 
 const PageContainer = styled.div`

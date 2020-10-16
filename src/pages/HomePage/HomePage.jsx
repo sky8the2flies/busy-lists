@@ -12,7 +12,7 @@ import RenameBoardForm from '../../components/RenameBoardForm/RenameBoardForm';
 
 const PageContainer = styled.div`
     display: flex;
-    height: 94.5vh;
+    min-height: 94.7vh;
 `;
 
 const Container = styled.div`
@@ -21,7 +21,7 @@ const Container = styled.div`
     align-content: flex-start;
     justify-content: flex-start;
     background-color: #e4e3e3;
-    height: 100%;
+    min-height: 94.5vh;
     padding: 10px;
     width: 25vw;
     max-width: 300px;
@@ -101,6 +101,14 @@ class HomePage extends React.Component {
         this.setState({ editBoard: -1 });
     };
 
+    handleGetStarted = () => {
+        if (this.props.user) {
+            this.setState({ newForm: true });
+        } else {
+            this.props.history.push('/accounts/signup');
+        }
+    };
+
     render() {
         const content = this.state.loading ? (
             <Loader />
@@ -119,7 +127,7 @@ class HomePage extends React.Component {
                                         <span>
                                             {board.authors[0] ===
                                             this.props.user._id ? (
-                                                <i class="far fa-check-circle"></i>
+                                                <i className="far fa-check-circle"></i>
                                             ) : (
                                                 ''
                                             )}
@@ -198,8 +206,25 @@ class HomePage extends React.Component {
         return (
             <PageContainer>
                 {sideBar}
-                <div>
-                    <h1>Home Page</h1>
+                <div className="HomePage-container">
+                    <div className="HomePage-header">
+                        <div className="HomePage-header-info">
+                            <h1>
+                                Welcome to{' '}
+                                <span className="HomePage-title">
+                                    BusyLists
+                                </span>
+                            </h1>
+                            <p>Stay busy, simply.</p>
+                            <br />
+                            <h5
+                                onClick={() => this.handleGetStarted()}
+                                className="HomePage-btn"
+                            >
+                                {this.props.user ? 'Add board' : 'Get Started'}
+                            </h5>
+                        </div>
+                    </div>
                 </div>
             </PageContainer>
         );

@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import './NavBar.css';
+
 const ContainerRight = styled.div`
     display: flex;
     align-content: center;
@@ -26,30 +28,23 @@ const Container = styled.div`
     background-color: #3b6978;
 `;
 
-const NavLink = styled.div`
-    min-width: 50px;
-    height: 100%;
-    text-align: center;
-    margin: 0px 10px;
-    color: white;
-    font-weight: 800;
-`;
-
 const NavBar = (props) => {
     let loggedIn = props.user ? (
         <>
             <p style={{ color: 'white' }}>Welcome {props.user.username}</p>
-            <Link to="/">
-                <NavLink onClick={props.handleLogout}>Log out</NavLink>
+            <Link className="reset-link" to="/">
+                <div className="NavBar-link" onClick={props.handleLogout}>
+                    LOG OUT
+                </div>
             </Link>
         </>
     ) : (
         <>
-            <Link to={'/accounts/login'}>
-                <NavLink>LOGIN</NavLink>
+            <Link className="reset-link" to={'/accounts/login'}>
+                <div className="NavBar-link">LOGIN</div>
             </Link>
-            <Link to={'/accounts/signup'}>
-                <NavLink>SIGN UP</NavLink>
+            <Link className="reset-link" to={'/accounts/signup'}>
+                <div className="NavBar-link">SIGN UP</div>
             </Link>
         </>
     );

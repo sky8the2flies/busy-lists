@@ -1,0 +1,15 @@
+.NavBar-link {
+    min-width: 50px;
+    height: 100%;
+    text-align: center;
+    padding: 10px;
+    color: white;
+    font-weight: 800;
+    border-radius: 5px;
+    transition: 300ms ease;
+    margin: 5px;
+}
+
+.NavBar-link:hover {
+    background-color: #407088;
+}

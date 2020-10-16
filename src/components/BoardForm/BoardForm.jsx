@@ -40,6 +40,7 @@ const BoardForm = (props) => {
                     placeholder="Enter board name"
                     value={form.name}
                     onChange={handleChange}
+                    autoFocus={true}
                 />
                 <button disabled={isFormValid()}>Add Board</button>
                 <p className="btn" onClick={() => props.handleNewBoardForm()}>

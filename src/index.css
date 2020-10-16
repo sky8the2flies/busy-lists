@@ -20,6 +20,7 @@
 .reset-link:hover {
     color: black;
     text-decoration: none;
+    border: none;
 }
 
 form {
