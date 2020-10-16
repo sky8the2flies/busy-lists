@@ -27,7 +27,12 @@ const BoardRow = styled.div`
 `;
 
 const PageContainer = styled.div`
-    background-image: url(https://images.unsplash.com/photo-1540171803164-3b88c6bf8eca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1345&q=80);
+    background-image: url('https://images.unsplash.com/photo-1557515126-1bf9ada5cb93?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80');
+    height: 100%;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 `;
 
 const Title = styled.div`
