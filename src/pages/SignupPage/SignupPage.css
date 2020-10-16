@@ -1,0 +1,17 @@
+.SignupPage-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.SignupPage-form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    max-width: 500px;
+}
+
+.SignupPage-form > input {
+    width: 100%;
+}

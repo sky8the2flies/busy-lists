@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import './LoginPage.css';
+
 import userService from '../../services/userService';
 
 class LoginPage extends React.Component {
@@ -29,26 +31,24 @@ class LoginPage extends React.Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container LoginPage-container">
                 <h1>Login</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <div className="container-col">
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            value={this.state.email}
-                            name="email"
-                            onChange={this.handleChange}
-                        />
+                <form className="LoginPage-form" onSubmit={this.handleSubmit}>
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={this.state.email}
+                        name="email"
+                        onChange={this.handleChange}
+                    />
 
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            value={this.state.password}
-                            name="password"
-                            onChange={this.handleChange}
-                        />
-                    </div>
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={this.state.password}
+                        name="password"
+                        onChange={this.handleChange}
+                    />
                     <button>Log In</button>
                     <Link className="btn reset-link" to="/">
                         Cancel

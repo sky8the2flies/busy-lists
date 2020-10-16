@@ -30,11 +30,16 @@ form {
 
 input {
     width: 100%;
-    max-width: 200px;
+    max-width: 500px;
     margin: 5px;
     padding: 5px;
     border-radius: 5px;
     border: 1px solid lightgray;
+}
+
+input:focus {
+    outline: none !important;
+    border: 2px solid #28abb9;
 }
 
 button {
@@ -48,6 +53,7 @@ button {
 button:hover {
     cursor: pointer;
     background-color: #3b6978;
+    border: 1px solid #3b6978;
     color: white;
 }
 
@@ -66,6 +72,7 @@ button:hover {
 .btn:hover {
     cursor: pointer;
     background-color: #3b6978;
+    border: 1px solid #3b6978;
     color: white;
 }
 .btn:disabled {

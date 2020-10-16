@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import './SignupPage.css';
+
 import userService from '../../services/userService';
 
 class SignupPage extends React.Component {
@@ -39,39 +41,37 @@ class SignupPage extends React.Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container SignupPage-container">
                 <h1>Sign up</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <div className="container-col">
-                        <input
-                            type="text"
-                            placeholder="Display name"
-                            value={this.state.username}
-                            name="username"
-                            onChange={this.handleChange}
-                        />
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            value={this.state.email}
-                            name="email"
-                            onChange={this.handleChange}
-                        />
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            value={this.state.password}
-                            name="password"
-                            onChange={this.handleChange}
-                        />
-                        <input
-                            type="password"
-                            placeholder="Confirm Password"
-                            value={this.state.passwordConf}
-                            name="passwordConf"
-                            onChange={this.handleChange}
-                        />
-                    </div>
+                <form className="SignupPage-form" onSubmit={this.handleSubmit}>
+                    <input
+                        type="text"
+                        placeholder="Display name"
+                        value={this.state.username}
+                        name="username"
+                        onChange={this.handleChange}
+                    />
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={this.state.email}
+                        name="email"
+                        onChange={this.handleChange}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={this.state.password}
+                        name="password"
+                        onChange={this.handleChange}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Confirm Password"
+                        value={this.state.passwordConf}
+                        name="passwordConf"
+                        onChange={this.handleChange}
+                    />
                     <button disabled={this.isFormInvalid()}>Sign Up</button>
                     <Link className="btn reset-link" to="/">
                         Cancel
