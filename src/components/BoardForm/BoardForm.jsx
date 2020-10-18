@@ -10,7 +10,6 @@ const FormContainer = styled.div`
 
 const BoardForm = (props) => {
     const [form, setForm] = useState({ name: '' });
-
     const handleChange = (e) => {
         setForm({ [e.target.name]: e.target.value });
     };
