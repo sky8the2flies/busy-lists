@@ -1,91 +1,102 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import './SignupPage.css';
-
 import userService from '../../services/userService';
 
-class SignupPage extends React.Component {
-    state = {
+import Error from '../../modals/Error';
+
+const SignupPage = (props) => {
+    const [form, setForm] = useState({
         username: '',
         email: '',
         password: '',
         passwordConf: '',
+    });
+
+    const [err, setErr] = useState(null);
+
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await userService.signup(this.state);
-            this.props.handleLoadUser();
-            this.props.history.push('/');
+            await userService.signup(form);
+            props.handleLoadUser();
+            props.history.push('/');
         } catch (err) {
-            console.log({ err });
-            //TODO Show user err
+            setErr(`The email "${form.email}" already exists.`);
         }
     };
 
-    isFormInvalid() {
+    function isFormInvalid() {
         return !(
-            this.state.username &&
-            this.state.email &&
-            this.state.password === this.state.passwordConf
+            form.username &&
+            form.email &&
+            form.password === form.passwordConf
         );
     }
 
-    render() {
-        return (
-            <div className="container SignupPage-container">
-                <h1>Sign up</h1>
-                <form className="SignupPage-form" onSubmit={this.handleSubmit}>
-                    <input
-                        type="text"
-                        placeholder="Display name"
-                        value={this.state.username}
-                        name="username"
-                        onChange={this.handleChange}
-                    />
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={this.state.email}
-                        name="email"
-                        onChange={this.handleChange}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={this.state.password}
-                        name="password"
-                        onChange={this.handleChange}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Confirm Password"
-                        value={this.state.passwordConf}
-                        name="passwordConf"
-                        onChange={this.handleChange}
-                    />
-                    <button disabled={this.isFormInvalid()}>Sign Up</button>
-                    <Link className="btn reset-link" to="/">
-                        Cancel
-                    </Link>
-                </form>
-                <div>
-                    <p>
-                        Already have an account?{' '}
-                        <Link to="/accounts/login">Login</Link>
-                    </p>
-                </div>
+    const closeErr = () => {
+        setErr(null);
+    };
+
+    const errContent = err ? (
+        <Error closeErr={closeErr}>
+            <h1>Signup Error</h1>
+            <p>{err}</p>
+        </Error>
+    ) : (
+        <></>
+    );
+    return (
+        <div className="container SignupPage-container">
+            {errContent}
+            <h1>Sign up</h1>
+            <form className="SignupPage-form" onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    placeholder="Display name"
+                    value={form.username}
+                    name="username"
+                    onChange={handleChange}
+                />
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={form.email}
+                    name="email"
+                    onChange={handleChange}
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={form.password}
+                    name="password"
+                    onChange={handleChange}
+                />
+                <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    value={form.passwordConf}
+                    name="passwordConf"
+                    onChange={handleChange}
+                />
+                <button disabled={isFormInvalid()}>Sign Up</button>
+                <Link className="btn reset-link" to="/">
+                    Cancel
+                </Link>
+            </form>
+            <div>
+                <p>
+                    Already have an account?{' '}
+                    <Link to="/accounts/login">Login</Link>
+                </p>
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
 export default SignupPage;

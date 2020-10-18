@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 
 import './LoginPage.css';
 
+import Error from '../../modals/Error';
 import userService from '../../services/userService';
 
 class LoginPage extends React.Component {
     state = {
         email: '',
         password: '',
+        err: null,
     };
 
     handleChange = (e) => {
@@ -24,14 +26,26 @@ class LoginPage extends React.Component {
             this.props.handleLoadUser();
             this.props.history.push('/');
         } catch (err) {
-            console.log({ err });
-            // Send user why error happened
+            this.setState({ err: 'Your email or password is incorrect.' });
         }
     };
 
+    closeErr = () => {
+        this.setState({ err: null });
+    };
+
     render() {
+        const err = this.state.err ? (
+            <Error closeErr={this.closeErr}>
+                <h1>Login Error</h1>
+                <p>{this.state.err}</p>
+            </Error>
+        ) : (
+            <></>
+        );
         return (
             <div className="container LoginPage-container">
+                {err}
                 <h1>Login</h1>
                 <form className="LoginPage-form" onSubmit={this.handleSubmit}>
                     <input
