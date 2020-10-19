@@ -9,6 +9,8 @@ export default {
     createColumn,
     deleteColumn,
     createTask,
+    updateTask,
+    deleteTask,
 };
 
 const BASE_URL = '/api/boards';
@@ -32,7 +34,7 @@ function createBoard(board) {
     })
         .then((res) => {
             if (res.ok) return res.json();
-            throw new Error('I am unsure (board)..');
+            throw new Error('Something went wrong: 404 (board)..');
         })
         .then((board) => board);
 }
@@ -44,7 +46,7 @@ function deleteBoard(boardId) {
     })
         .then((res) => {
             if (res.ok) return res.json();
-            throw new Error('I am unsure (board delete)');
+            throw new Error('Something went wrong: 404 (board delete)');
         })
         .then((deletedBoard) => deletedBoard);
 }
@@ -65,7 +67,7 @@ function createColumn(boardId, column) {
     })
         .then((res) => {
             if (res.ok) return res.json();
-            throw new Error('I am unsure (column)..');
+            throw new Error('Something went wrong: 404 (column)..');
         })
         .then((board) => board);
 }
@@ -77,7 +79,7 @@ function deleteColumn(boardId, column) {
     })
         .then((res) => {
             if (res.ok) return res.json();
-            throw new Error('I am unsure (column delete)..');
+            throw new Error('Something went wrong: 404 (column delete)..');
         })
         .then((board) => board);
 }
@@ -90,7 +92,39 @@ function createTask(boardId, columnId, task) {
     })
         .then((res) => {
             if (res.ok) return res.json();
-            throw new Error('I am unsure (task)...');
+            throw new Error('Something went wrong: 404 (task)...');
+        })
+        .then((board) => board);
+}
+
+function updateTask(boardId, columnId, task) {
+    return fetch(
+        `${BASE_URL}/${boardId}/columns/${columnId}/tasks/${task._id}`,
+        {
+            method: 'PUT',
+            headers: tokenService.getAuthMethods(),
+            body: JSON.stringify(task),
+        }
+    )
+        .then((res) => {
+            if (res.ok) return res.json();
+            throw new Error('Something went wrong: 404 (task)...');
+        })
+        .then((board) => board);
+}
+
+function deleteTask(boardId, columnId, task) {
+    return fetch(
+        `${BASE_URL}/${boardId}/columns/${columnId}/tasks/${task._id}`,
+        {
+            method: 'DELETE',
+            headers: tokenService.getAuthMethods(),
+            body: JSON.stringify(task),
+        }
+    )
+        .then((res) => {
+            if (res.ok) return res.json();
+            throw new Error('Something went wrong: 404 (task)...');
         })
         .then((board) => board);
 }

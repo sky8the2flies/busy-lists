@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const taskSchema = new mongoose.Schema(
     {
         content: String,
+        description: String,
+        assigned: [{ type: String }],
+        due: { type: Date },
     },
     {
         timestamps: true,

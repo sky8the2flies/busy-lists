@@ -75,7 +75,7 @@ class App extends React.Component {
                         path="/boards/:id"
                         render={() =>
                             userService.getUser() ? (
-                                <BusyList />
+                                <BusyList user={this.state.user} />
                             ) : (
                                 <Redirect to="/accounts/login" />
                             )

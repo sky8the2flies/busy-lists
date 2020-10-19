@@ -19,7 +19,7 @@ async function createColumn(req, res) {
 
 async function deleteColumn(req, res) {
     try {
-        let board = await Board.findById(req.params.id);
+        let board = await Board.findById(req.params.id).populate('authors');
         const index = board.columns.findIndex(
             (column) => String(column._id) === req.params.cid
         );

@@ -21,7 +21,7 @@ async function getAll(req, res) {
 
 async function getOne(req, res) {
     try {
-        const board = await Board.findById(req.params.id);
+        const board = await Board.findById(req.params.id).populate('authors');
         res.status(200).json(board);
     } catch {
         console.log(err);
@@ -45,7 +45,7 @@ async function createBoard(req, res) {
 
 async function deleteBoard(req, res) {
     try {
-        const board = await Board.findById(req.params.id);
+        const board = await Board.findById(req.params.id).populate('authors');
         if (board.authors.length > 1) {
             const index = board.authors.findIndex(
                 (author) => String(author._id) === String(req.user._id)
@@ -63,7 +63,10 @@ async function deleteBoard(req, res) {
 
 async function updateBoard(req, res) {
     try {
-        const board = await Board.findByIdAndUpdate(req.params.id, req.body);
+        const board = await Board.findByIdAndUpdate(
+            req.params.id,
+            req.body
+        ).populate('authors');
         res.status(204).json(board);
     } catch (err) {
         console.log(err);

@@ -20,6 +20,7 @@ const OptionsMenu = styled.div`
     ${(props) => (props.left ? `right:` : 'left:')} ${(props) =>
         props.content ? `${10 + props.content.length * 7}px` : '25px'};
     top: -10px;
+    z-index: 999;
 `;
 
 const ChildMenu = styled.div`

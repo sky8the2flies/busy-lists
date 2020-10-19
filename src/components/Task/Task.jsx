@@ -16,9 +16,9 @@ const Container = styled.div`
 export default class Task extends React.Component {
     state = { editTask: false };
 
-    handleTaskToggle = () => {
+    handleTaskToggle = (value) => {
         this.setState({
-            editTask: !this.state.editTask,
+            editTask: value || !this.state.editTask,
         });
     };
 
@@ -38,17 +38,82 @@ export default class Task extends React.Component {
                                 isDragging={snapshot.isDragging}
                                 onClick={() => this.handleTaskToggle()}
                             >
-                                {this.props.task.content}
+                                <p className="task">
+                                    {this.props.task.content}
+                                    {'  '}
+                                    {this.props.task.assigned.includes(
+                                        this.props.user.username
+                                    ) ? (
+                                        <span style={{ color: 'red' }}>
+                                            Assigned{' '}
+                                            <i className="fas fa-exclamation-circle"></i>
+                                        </span>
+                                    ) : (
+                                        <></>
+                                    )}
+                                </p>
+                                {this.props.task.due &&
+                                daysUntil(new Date(this.props.task.due)) >=
+                                    0 ? (
+                                    <p
+                                        style={{
+                                            color: '#0d7377',
+                                            fontWeight: '600',
+                                        }}
+                                        className="center"
+                                    >
+                                        Due in{' '}
+                                        {daysUntil(
+                                            new Date(this.props.task.due)
+                                        )}{' '}
+                                        day(s)
+                                    </p>
+                                ) : (
+                                    <>
+                                        {' '}
+                                        {this.props.task.due &&
+                                        daysUntil(
+                                            new Date(this.props.task.due)
+                                        ) < 0 ? (
+                                            <p
+                                                style={{
+                                                    color: '#de4463',
+                                                    fontWeight: '600',
+                                                }}
+                                                className="center"
+                                            >
+                                                Overdue
+                                            </p>
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </>
+                                )}
                             </Container>
                         </>
                     )}
                 </Draggable>
                 {this.state.editTask ? (
-                    <EditTask handleTaskToggle={this.handleTaskToggle} />
+                    <EditTask
+                        board={this.props.board}
+                        task={this.props.task}
+                        column={this.props.column}
+                        handleTaskToggle={this.handleTaskToggle}
+                        handleTaskUpdate={this.props.handleTaskUpdate}
+                    />
                 ) : (
                     <></>
                 )}
             </>
         );
     }
+}
+
+function daysUntil(date) {
+    const today = new Date();
+    if (today.getMonth() === 11 && today.getDate() > 25) {
+        date.setFullYear(date.getFullYear() + 1);
+    }
+    const one_day = 1000 * 60 * 60 * 24;
+    return Math.ceil((date.getTime() - today.getTime()) / one_day);
 }

@@ -54,7 +54,9 @@ class InnerList extends React.PureComponent {
                         column={column}
                         index={index}
                         board={this.props.board}
+                        user={this.props.user}
                         handleTaskCreate={this.props.handleTaskCreate}
+                        handleTaskUpdate={this.props.handleTaskUpdate}
                         handleColumnDelete={this.props.handleColumnDelete}
                         handleColumnSubmitRename={
                             this.props.handleColumnSubmitRename
@@ -106,6 +108,10 @@ class BusyList extends React.Component {
         newState.columns.splice(index, 1, column);
         this.handleUpdateBoard(newState);
         this.setState({ board: newState });
+    };
+
+    handleTaskUpdate = (board) => {
+        this.setState({ board });
     };
 
     handleInviteCreate = (invite) => {
@@ -172,9 +178,11 @@ class BusyList extends React.Component {
                                     <InnerList
                                         columns={this.state.board.columns}
                                         board={this.state.board}
+                                        user={this.props.user}
                                         handleTaskCreate={
                                             this.handleComponentCreation
                                         }
+                                        handleTaskUpdate={this.handleTaskUpdate}
                                         handleColumnDelete={
                                             this.handleColumnDelete
                                         }

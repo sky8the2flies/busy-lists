@@ -5,10 +5,9 @@ const taskCtrl = require('../../controllers/api/tasks');
 
 //POST /api/boards/:id/columns/:cid
 router.post('/:id/columns/:cid', taskCtrl.createTask);
-
-function checkAuth(req, res, next) {
-    if (req.user) return next();
-    return res.status(401).json({ msg: 'Not Authorized' });
-}
+//PUT /api/boards/:id/columns/:cid/tasks/:tid
+router.put('/:id/columns/:cid/tasks/:tid', taskCtrl.updateTask);
+//DELETE /api/boards/:id/columns/:cid/tasks/:tid
+router.delete('/:id/columns/:cid/tasks/:tid', taskCtrl.deleteTask);
 
 module.exports = router;
