@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Redirect, useParams, Link } from 'react-router-dom';
 
 import inviteApi from '../../services/inviteApi';
 
@@ -24,10 +23,15 @@ const InvitePage = (props) => {
         <Loader />
     ) : (
         <>
-            {content.board ? (
+            {content.board._id ? (
                 <Redirect to={`/boards/${content.board._id}`} />
             ) : (
-                <h1>That invite is out of uses or does not exist</h1>
+                <div className="center-col w-100">
+                    <h1>That invite is out of uses or does not exist</h1>
+                    <Link to="/" className="btn w-50">
+                        Back to home
+                    </Link>
+                </div>
             )}
         </>
     );
