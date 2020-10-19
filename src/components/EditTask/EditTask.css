@@ -13,16 +13,18 @@
 
 .EditTask-container {
     position: absolute;
-    height: 70%;
+    height: 75%;
     width: 75%;
     max-width: 800px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #e4e3e3;
+    background-color: #f6f5f5;
+    box-shadow: 0 0 50px 20px black;
     z-index: 999;
     border-radius: 5px;
     overflow: auto;
+    color: black;
 }
 
 .EditTask-close {
@@ -37,6 +39,21 @@
     text-align: center;
 }
 
+.EditTask-form * {
+    font-weight: 700;
+}
+
+.EditTask-form h5 {
+    color: black;
+}
+
+.EditTask-form button {
+    border: none;
+}
+.EditTask-form p {
+    border: none;
+}
+
 .EditTask-form-container {
     display: flex;
     flex-direction: column;
@@ -48,12 +65,12 @@
     flex-direction: column;
     justify-content: space-evenly;
     height: 100%;
+    align-items: center;
 }
 
 .EditTask-form > textarea {
     resize: vertical;
     border-radius: 5px;
-    border: none;
     margin: 5px 0px;
     width: 90%;
     padding: 5px;
@@ -71,11 +88,17 @@
 .EditTask-form-group {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+}
+
+.EditTask-form-pair {
+    display: flex;
+    flex-direction: column;
 }
 
 .EditTask-assigned {
     padding: 5px;
-    background-color: white;
+    background-color: #01c5c4;
     margin: 5px;
     border-radius: 5px;
     transition: 200ms ease;
@@ -89,7 +112,6 @@
 
 .EditTask-form select {
     border-radius: 5px;
-    border: none;
     margin: 5px 0px;
     width: 100%;
     overflow: auto;

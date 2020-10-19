@@ -65,6 +65,7 @@ button:hover {
     border: 1px solid lightgray;
     background-color: #eee;
     transition: 0.3s ease-in-out;
+    color: black;
 }
 
 .btn:hover {

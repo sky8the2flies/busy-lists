@@ -85,90 +85,112 @@ const EditTask = (props) => {
                     &times;
                 </div>
                 <div className="EditTask-form-container">
+                    <h1>Edit Task</h1>
                     <form onSubmit={handleSubmit} className="EditTask-form">
-                        <label htmlFor="title">Title</label>
-                        <input
-                            id="title"
-                            type="text"
-                            value={form.content}
-                            name="content"
-                            onChange={handleChange}
-                        />
-                        <label htmlFor="description">Description</label>
-                        <textarea
-                            id="description"
-                            rows="5"
-                            name="description"
-                            onChange={handleChange}
-                            defaultValue={form.description}
-                        ></textarea>
-                        <h5>Date Due</h5>
-                        {form.due ? (
-                            <div className="EditTask-form-group w-100">
-                                <DatePicker
-                                    selected={form.due}
-                                    onChange={(date) => handleDateChange(date)}
-                                />
-                                <p
-                                    style={{ backgroundColor: 'red' }}
-                                    className="btn w-25"
-                                    onClick={() => handleRemoveDue()}
-                                >
-                                    Remove
-                                </p>
-                            </div>
-                        ) : (
-                            <>
-                                <p
-                                    className="btn w-25"
-                                    onClick={() =>
-                                        setForm({ ...form, due: new Date() })
-                                    }
-                                >
-                                    Add due date
-                                </p>
-                            </>
-                        )}
-                        <h5>Assigned Users</h5>
-                        <div className="EditTask-form-group w-100">
-                            <div className="EditTask-form-group w-25">
-                                <select
-                                    onChange={handleSelectChange}
-                                    name="assigned"
-                                    multiple={true}
-                                >
-                                    {props.board.authors.map((user) => (
-                                        <option
-                                            key={user._id}
-                                            value={user.username}
-                                        >
-                                            {user.username}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className="EditTask-form-group w-75">
-                                {form.assigned.map((user) => (
-                                    <div
-                                        key={user}
-                                        onClick={() =>
-                                            handleRemoveAssigned(user)
+                        <div className="EditTask-form-pair w-100">
+                            <label htmlFor="title">Title</label>
+                            <input
+                                id="title"
+                                type="text"
+                                value={form.content}
+                                name="content"
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="EditTask-form-pair w-100">
+                            <label htmlFor="description">Description</label>
+                            <textarea
+                                id="description"
+                                rows="5"
+                                name="description"
+                                onChange={handleChange}
+                                defaultValue={form.description}
+                            ></textarea>
+                        </div>
+                        <div className="EditTask-form-pair w-100">
+                            <h5>Date Due</h5>
+                            {form.due ? (
+                                <div className="EditTask-form-group w-100">
+                                    <DatePicker
+                                        selected={form.due}
+                                        onChange={(date) =>
+                                            handleDateChange(date)
                                         }
-                                        className="EditTask-assigned clickable"
+                                    />
+                                    <p
+                                        style={{ backgroundColor: 'red' }}
+                                        className="btn w-25"
+                                        onClick={() => handleRemoveDue()}
                                     >
-                                        {user}
-                                    </div>
-                                ))}
+                                        Remove
+                                    </p>
+                                </div>
+                            ) : (
+                                <>
+                                    <p
+                                        className="btn w-25"
+                                        onClick={() =>
+                                            setForm({
+                                                ...form,
+                                                due: new Date(),
+                                            })
+                                        }
+                                    >
+                                        Add due date
+                                    </p>
+                                </>
+                            )}
+                        </div>
+                        <div className="EditTask-form-pair w-100">
+                            <h5>Assigned Users</h5>
+                            <div className="EditTask-form-group w-100">
+                                <div className="EditTask-form-group w-50">
+                                    <select
+                                        onChange={handleSelectChange}
+                                        name="assigned"
+                                        multiple={true}
+                                    >
+                                        {props.board.authors.map((user) => (
+                                            <option
+                                                key={user._id}
+                                                value={user.username}
+                                            >
+                                                {user.username}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="EditTask-form-group w-50">
+                                    {form.assigned.map((user) => (
+                                        <div
+                                            key={user}
+                                            onClick={() =>
+                                                handleRemoveAssigned(user)
+                                            }
+                                            className="EditTask-assigned clickable"
+                                        >
+                                            {user}
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                         <div
                             style={{ height: '30px' }}
-                            className="EditTask-form-group center"
+                            className="EditTask-form-group center w-75"
                         >
-                            <button className="w-25">Save Task</button>
+                            <button
+                                style={{ backgroundColor: '#01c5c4' }}
+                                className="w-100"
+                            >
+                                Save Task
+                            </button>
                             <p
-                                className="btn w-25"
-                                style={{ backgroundColor: 'red' }}
+                                className="btn w-100"
+                                style={{
+                                    backgroundColor: 'red',
+                                    fontWeight: '700',
+                                }}
                                 onClick={() => handleDelete()}
                             >
                                 Delete Task
