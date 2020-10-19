@@ -26,6 +26,7 @@ Ever heard of [Trello](https://trello.com/)? I wanted to make a simpler clone of
 4. Express
 5. Mongoose / MongoDB
 6. React.js
+7. StyledComponents
 
 ## Getting Started
 
