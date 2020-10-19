@@ -13,10 +13,10 @@ Ever heard of [Trello](https://trello.com/)? I wanted to make a simpler clone of
 
 ## Images
 
-<!-- ![Image 1](https://i.imgur.com/HmfAQ4n.png)
-![Image 2](https://i.imgur.com/IY4v7pm.png) -->
-
-TODO
+![Image 1](https://i.imgur.com/OnZsm7v.png)
+![Image 2](https://i.imgur.com/6r0ySXK.png)
+![Image 2](https://i.imgur.com/xUuwNFG.png)
+![Image 2](https://i.imgur.com/rhnMmQZ.png)
 
 ## Technologies used
 
