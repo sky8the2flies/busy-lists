@@ -81,6 +81,7 @@ class App extends React.Component {
                             )
                         }
                     />
+                    {/* Invite User Route */}
                     <Route
                         path="/invites/:id"
                         render={() =>
