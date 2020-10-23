@@ -26,7 +26,6 @@ const OptionsMenu = styled.div`
 const ChildMenu = styled.div`
     text-align: center;
     height: 100%;
-    width: 100%;
     z-index: 999;
 `;
 

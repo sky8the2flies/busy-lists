@@ -5,6 +5,9 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import boardApi from '../../services/boardApi';
 import inviteApi from '../../services/inviteApi';
+import imageApi from '../../services/imageApi';
+
+import './BusyList.css';
 
 import NewInviteForm from '../../components/NewInviteForm/NewInviteForm';
 import Column from '../../components/Column/Column';
@@ -12,6 +15,7 @@ import CardForm from '../../components/CardForm/CardForm';
 import Loader from '../../components/Loader/Loader';
 import Options from '../../modals/Options';
 import Copy from '../../components/Copy/Copy';
+import ImageForm from '../../components/ImageForm/ImageForm';
 
 const Container = styled.div`
     display: flex;
@@ -24,15 +28,6 @@ const ContainerRow = styled.div`
 const BoardRow = styled.div`
     min-height: 89.3vh;
     overflow-x: auto;
-`;
-
-const PageContainer = styled.div`
-    background-image: url('https://images.unsplash.com/photo-1557515126-1bf9ada5cb93?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80');
-    height: 100%;
-
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
 `;
 
 const Title = styled.div`
@@ -71,14 +66,27 @@ class InnerList extends React.PureComponent {
 let mounted = false;
 
 class BusyList extends React.Component {
-    state = { board: {}, invites: [], loading: true };
+    state = {
+        board: {},
+        invites: [],
+        showImages: false,
+        images: [],
+        loading: true,
+    };
 
     async componentDidMount() {
         mounted = true;
         const id = this.props.match.params.id;
         const board = await boardApi.getOne(id);
         const invites = await inviteApi.getAll(board);
-        if (mounted) this.setState({ board, invites, loading: false });
+        const images = await imageApi.getAll();
+        if (mounted)
+            this.setState({
+                board,
+                invites,
+                images: images.results,
+                loading: false,
+            });
     }
     componentWillUnmount() {
         mounted = false;
@@ -118,6 +126,12 @@ class BusyList extends React.Component {
         const newState = [...this.state.invites];
         newState.push(invite);
         this.setState({ invites: newState });
+    };
+
+    handleImageChange = (image) => {
+        const board = JSON.parse(JSON.stringify(this.state.board));
+        board.bgUrl = image.urls.full;
+        this.setState({ board, showImages: false });
     };
 
     onDragEnd = (result) => {
@@ -206,13 +220,47 @@ class BusyList extends React.Component {
                 </DragDropContext>
             </>
         );
+        const imageContent = this.state.showImages ? (
+            <div className="BusyList-images">
+                <ImageForm
+                    images={this.state.images}
+                    handleImageChange={this.handleImageChange}
+                />
+            </div>
+        ) : (
+            <></>
+        );
         return (
-            <PageContainer>
+            <div
+                className="BusyList-page-container"
+                style={{
+                    backgroundImage: this.state.board.bgUrl
+                        ? `url(${this.state.board.bgUrl})`
+                        : '#16697a',
+                    backgroundColor: this.state.board.bgUrl
+                        ? `${this.state.board.bgUrl}`
+                        : '#16697a',
+                }}
+            >
                 <Title>
                     <div>
                         <h1 style={{ color: 'white', letterSpacing: '1px' }}>
                             {this.state.board.name}
                         </h1>
+                    </div>
+                    <div>
+                        <h5
+                            style={{ color: 'white' }}
+                            className="clickable"
+                            onClick={() =>
+                                this.setState({
+                                    showImages: !this.state.showImages,
+                                })
+                            }
+                        >
+                            Change Background
+                        </h5>
+                        {imageContent}
                     </div>
                     <div>
                         <h5>
@@ -236,7 +284,7 @@ class BusyList extends React.Component {
                     </div>
                 </Title>
                 <BoardRow>{content}</BoardRow>
-            </PageContainer>
+            </div>
         );
     }
 }
