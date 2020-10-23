@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.use('/api/users', require('./routes/api/users'));
 
 app.use(require('./config/auth'));
+app.use('/api/images', require('./routes/api/images'));
 app.use('/api/boards', require('./routes/api/boards'));
 app.use('/api/boards', require('./routes/api/columns'));
 app.use('/api/boards', require('./routes/api/tasks'));
