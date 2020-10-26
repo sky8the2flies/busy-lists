@@ -78,6 +78,10 @@ class BusyList extends React.Component {
         mounted = true;
         const id = this.props.match.params.id;
         const board = await boardApi.getOne(id);
+        if (!board._id) {
+            this.props.history.push('/');
+            return;
+        }
         const invites = await inviteApi.getAll(board);
         const images = await imageApi.getAll();
         if (mounted)
@@ -93,20 +97,24 @@ class BusyList extends React.Component {
     }
 
     handleUpdateBoard = (updateData) => {
+        if (!isUserInBoard(this.props.user, this.state.board)) return;
         boardApi.updateBoard(updateData);
     };
 
     handleComponentCreation = async (board) => {
+        if (!isUserInBoard(this.props.user, this.state.board)) return;
         this.setState({ board });
     };
 
     handleColumnDelete = async (column) => {
+        if (!isUserInBoard(this.props.user, this.state.board)) return;
         this.setState({ loading: true });
         const board = await boardApi.deleteColumn(this.state.board._id, column);
         this.setState({ board, loading: false });
     };
 
     handleColumnSubmitRename = (column, index) => {
+        if (!isUserInBoard(this.props.user, this.state.board)) return;
         let newState = {
             ...this.state.board,
             columns: this.state.board.columns.map((column) => {
@@ -119,22 +127,26 @@ class BusyList extends React.Component {
     };
 
     handleTaskUpdate = (board) => {
+        if (!isUserInBoard(this.props.user, this.state.board)) return;
         this.setState({ board });
     };
 
     handleInviteCreate = (invite) => {
+        if (!isUserInBoard(this.props.user, this.state.board)) return;
         const newState = [...this.state.invites];
         newState.push(invite);
         this.setState({ invites: newState });
     };
 
     handleImageChange = (image) => {
+        if (!isUserInBoard(this.props.user, this.state.board)) return;
         const board = JSON.parse(JSON.stringify(this.state.board));
         board.bgUrl = image.urls.full;
         this.setState({ board, showImages: false });
     };
 
     onDragEnd = (result) => {
+        if (!isUserInBoard(this.props.user, this.state.board)) return;
         const { destination, source, type } = result;
         if (!destination) return;
         if (
@@ -207,12 +219,19 @@ class BusyList extends React.Component {
                                     {provided.placeholder}
                                 </Container>
                                 <Container>
-                                    <CardForm
-                                        boardId={this.state.board._id}
-                                        handleColumnCreate={
-                                            this.handleComponentCreation
-                                        }
-                                    />
+                                    {isUserInBoard(
+                                        this.props.user,
+                                        this.state.board
+                                    ) ? (
+                                        <CardForm
+                                            boardId={this.state.board._id}
+                                            handleColumnCreate={
+                                                this.handleComponentCreation
+                                            }
+                                        />
+                                    ) : (
+                                        <></>
+                                    )}
                                 </Container>
                             </ContainerRow>
                         )}
@@ -248,45 +267,63 @@ class BusyList extends React.Component {
                             {this.state.board.name}
                         </h1>
                     </div>
-                    <div>
-                        <h5
-                            style={{ color: 'white' }}
-                            className="clickable"
-                            onClick={() =>
-                                this.setState({
-                                    showImages: !this.state.showImages,
-                                })
-                            }
-                        >
-                            Change Background
-                        </h5>
-                        {imageContent}
-                    </div>
-                    <div>
-                        <h5>
-                            <Options
-                                left={true}
-                                content=" Invite link"
-                                label={'fas fa-user-plus'}
-                                name="Invites"
-                                color="white"
-                            >
-                                {this.state.invites.map((invite, index) => (
-                                    <Copy key={index} invite={invite} />
-                                ))}
-                                <hr />
-                                <NewInviteForm
-                                    board={this.state.board}
-                                    handleInviteCreate={this.handleInviteCreate}
-                                />
-                            </Options>
-                        </h5>
-                    </div>
+                    {isUserInBoard(this.props.user, this.state.board) ? (
+                        <>
+                            {' '}
+                            <div>
+                                <h5
+                                    style={{ color: 'white' }}
+                                    className="clickable"
+                                    onClick={() =>
+                                        this.setState({
+                                            showImages: !this.state.showImages,
+                                        })
+                                    }
+                                >
+                                    Change Background
+                                </h5>
+                                {imageContent}
+                            </div>
+                            <div>
+                                <h5>
+                                    <Options
+                                        left={true}
+                                        content=" Invite link"
+                                        label={'fas fa-user-plus'}
+                                        name="Invites"
+                                        color="white"
+                                    >
+                                        {this.state.invites.map(
+                                            (invite, index) => (
+                                                <Copy
+                                                    key={index}
+                                                    invite={invite}
+                                                />
+                                            )
+                                        )}
+                                        <hr />
+                                        <NewInviteForm
+                                            board={this.state.board}
+                                            handleInviteCreate={
+                                                this.handleInviteCreate
+                                            }
+                                        />
+                                    </Options>
+                                </h5>
+                            </div>
+                        </>
+                    ) : (
+                        <></>
+                    )}
                 </Title>
                 <BoardRow>{content}</BoardRow>
             </div>
         );
     }
+}
+
+function isUserInBoard(user, board) {
+    return user && board.authors && board.authors.find(() => user);
 }
 
 export default withRouter(BusyList);

@@ -17,6 +17,7 @@ export default class Task extends React.Component {
     state = { editTask: false };
 
     handleTaskToggle = (value) => {
+        if (!isUserInBoard(this.props.user, this.props.board)) return;
         this.setState({
             editTask: value || !this.state.editTask,
         });
@@ -41,7 +42,8 @@ export default class Task extends React.Component {
                                 <p className="task">
                                     {this.props.task.content}
                                     {'  '}
-                                    {this.props.task.assigned.includes(
+                                    {this.props.user &&
+                                    this.props.task.assigned.includes(
                                         this.props.user.username
                                     ) ? (
                                         <span style={{ color: 'red' }}>
@@ -116,4 +118,8 @@ function daysUntil(date) {
     }
     const one_day = 1000 * 60 * 60 * 24;
     return Math.ceil((date.getTime() - today.getTime()) / one_day);
+}
+
+function isUserInBoard(user, board) {
+    return user && board.authors && board.authors.find(() => user);
 }

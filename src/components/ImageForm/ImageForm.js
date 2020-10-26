@@ -9,6 +9,7 @@ const ImageForm = (props) => {
                     onClick={() => props.handleImageChange(image)}
                     className="clickable"
                     src={image.urls.small}
+                    alt={`${image.alt_description}`}
                 />
             ))}
         </>

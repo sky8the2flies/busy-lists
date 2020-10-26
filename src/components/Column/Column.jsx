@@ -106,13 +106,15 @@ export default class Column extends React.Component {
                 handleTaskCreate={this.props.handleTaskCreate}
                 handleCancelTask={this.handleCancelTask}
             />
-        ) : (
+        ) : isUserInBoard(this.props.user, this.props.board) ? (
             <NewTask
                 className="clickable"
                 onClick={() => this.setState({ newTask: true })}
             >
                 + Add new Task
             </NewTask>
+        ) : (
+            <></>
         );
         return (
             <Draggable
@@ -130,29 +132,36 @@ export default class Column extends React.Component {
                                 isDragging={snapshot.isDragging}
                             >
                                 {content}
-                                <Options name={this.props.column.title}>
-                                    <OptionsContainer
-                                        className="clickable"
-                                        onClick={() => {
-                                            this.setState({
-                                                rename: !this.state.rename,
-                                            });
-                                        }}
-                                    >
-                                        Rename
-                                    </OptionsContainer>
-                                    <OptionsContainer
-                                        className="clickable"
-                                        style={{ color: 'red' }}
-                                        onClick={() =>
-                                            this.props.handleColumnDelete(
-                                                this.props.column
-                                            )
-                                        }
-                                    >
-                                        Delete
-                                    </OptionsContainer>
-                                </Options>
+                                {isUserInBoard(
+                                    this.props.user,
+                                    this.props.board
+                                ) ? (
+                                    <Options name={this.props.column.title}>
+                                        <OptionsContainer
+                                            className="clickable"
+                                            onClick={() => {
+                                                this.setState({
+                                                    rename: !this.state.rename,
+                                                });
+                                            }}
+                                        >
+                                            Rename
+                                        </OptionsContainer>
+                                        <OptionsContainer
+                                            className="clickable"
+                                            style={{ color: 'red' }}
+                                            onClick={() =>
+                                                this.props.handleColumnDelete(
+                                                    this.props.column
+                                                )
+                                            }
+                                        >
+                                            Delete
+                                        </OptionsContainer>
+                                    </Options>
+                                ) : (
+                                    <></>
+                                )}
                             </Title>
                             <Droppable
                                 droppableId={String(this.props.index)}
@@ -184,4 +193,8 @@ export default class Column extends React.Component {
             </Draggable>
         );
     }
+}
+
+function isUserInBoard(user, board) {
+    return user && board.authors && board.authors.find(() => user);
 }

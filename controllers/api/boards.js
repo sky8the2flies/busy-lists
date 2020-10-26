@@ -23,7 +23,7 @@ async function getOne(req, res) {
     try {
         const board = await Board.findById(req.params.id).populate('authors');
         res.status(200).json(board);
-    } catch {
+    } catch (err) {
         console.log(err);
         return res.status(400).json(err);
     }

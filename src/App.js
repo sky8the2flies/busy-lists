@@ -73,13 +73,12 @@ class App extends React.Component {
                     {/* View Board Route */}
                     <Route
                         path="/boards/:id"
-                        render={() =>
-                            userService.getUser() ? (
-                                <BusyList user={this.state.user} />
-                            ) : (
-                                <Redirect to="/accounts/login" />
-                            )
-                        }
+                        render={({ history }) => (
+                            <BusyList
+                                history={history}
+                                user={this.state.user}
+                            />
+                        )}
                     />
                     {/* Invite User Route */}
                     <Route
